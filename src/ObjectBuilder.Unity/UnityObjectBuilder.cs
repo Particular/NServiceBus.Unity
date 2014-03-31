@@ -131,7 +131,7 @@
 
         public bool HasComponent(Type componentType)
         {
-            return container.IsRegistered(componentType);
+            return DefaultInstances.Contains(componentType);
         }
 
         public void Release(object instance)
