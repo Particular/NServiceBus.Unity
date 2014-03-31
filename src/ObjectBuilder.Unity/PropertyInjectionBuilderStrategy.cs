@@ -40,7 +40,7 @@ namespace NServiceBus.ObjectBuilder.Unity
                         continue;
                     }
 
-                    if (unityContainer.IsRegistered(property.PropertyType))
+                    if (DefaultInstances.Contains(property.PropertyType))
                     {
                         property.SetValue(context.Existing, unityContainer.Resolve(property.PropertyType),null);
                     }
