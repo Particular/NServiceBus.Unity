@@ -26,8 +26,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\binaries\NServiceBus.ObjectBuilder.Unity.XML</DocumentationFile>
-    <NoWarn>1591,1573</NoWarn>
+    <DocumentationFile>..\..\binaries\NServiceBus.ObjectBuilder.Unity.xml</DocumentationFile>
+    <NoWarn>1591</NoWarn>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
@@ -38,8 +38,8 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\binaries\NServiceBus.ObjectBuilder.Unity.XML</DocumentationFile>
-    <NoWarn>1591,1573</NoWarn>
+    <DocumentationFile>..\..\binaries\NServiceBus.ObjectBuilder.Unity.xml</DocumentationFile>
+    <NoWarn>1591</NoWarn>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
@@ -78,7 +78,7 @@
     <Compile Include="PropertyInjectionBuilderStrategy.cs" />
     <Compile Include="PropertyInjectionContainerExtension.cs" />
     <Compile Include="UnityObjectBuilder.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Fody.targets" />
