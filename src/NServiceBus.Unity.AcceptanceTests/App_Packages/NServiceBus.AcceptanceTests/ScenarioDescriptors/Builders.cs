@@ -9,11 +9,6 @@
     {
         static IList<RunDescriptor> availableTransports;
 
-        public static IEnumerable<RunDescriptor> AllAvailable
-        {
-            get { return availableTransports ?? (availableTransports = GetAllAvailable().ToList()); }
-        }
-
         static IEnumerable<RunDescriptor> GetAllAvailable()
         {
             var builders = TypeScanner.GetAllTypesAssignableTo<ContainerDefinition>()
@@ -27,29 +22,12 @@
             });
         }
 
-        public static RunDescriptor Autofac
+        public static RunDescriptor Default
         {
-            get { return AllAvailable.SingleOrDefault(r => r.Key == "Autofac"); }
-        }
-
-        public static RunDescriptor Ninject
-        {
-            get { return AllAvailable.SingleOrDefault(r => r.Key == "Ninject"); }
-        }
-
-        public static RunDescriptor StructureMap
-        {
-            get { return AllAvailable.SingleOrDefault(r => r.Key == "StructureMap"); }
-        }
-
-        public static RunDescriptor Windsor
-        {
-            get { return AllAvailable.SingleOrDefault(r => r.Key == "Windsor"); }
-        }
-
-        public static RunDescriptor Spring
-        {
-            get { return AllAvailable.SingleOrDefault(r => r.Key == "Spring"); }
+            get
+            {
+                return GetAllAvailable().FirstOrDefault();
+            }
         }
     }
 }

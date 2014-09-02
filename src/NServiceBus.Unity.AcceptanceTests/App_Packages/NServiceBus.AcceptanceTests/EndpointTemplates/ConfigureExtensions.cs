@@ -1,6 +1,7 @@
 ﻿namespace NServiceBus.AcceptanceTests.EndpointTemplates
 {
     using System;
+    using System.CodeDom;
     using System.Collections.Generic;
     using Persistence;
     using ScenarioDescriptors;
@@ -17,7 +18,7 @@
             return dictionary[key];
         }
 
-        public static Configure DefineTransport(this Configure config, IDictionary<string, string> settings)
+        public static void DefineTransport(this BusConfiguration builder, IDictionary<string, string> settings)
         {
             if (!settings.ContainsKey("Transport"))
             {
@@ -26,10 +27,10 @@
 
             var transportType = Type.GetType(settings["Transport"]);
 
-            return config.UseTransport(transportType, c => c.ConnectionString(settings["Transport.ConnectionString"]));
+            builder.UseTransport(transportType).ConnectionString(settings["Transport.ConnectionString"]);
         }
 
-        public static Configure DefinePersistence(this Configure config, IDictionary<string, string> settings)
+        public static void DefinePersistence(this BusConfiguration config, IDictionary<string, string> settings)
         {
             if (!settings.ContainsKey("Persistence"))
             {
@@ -39,7 +40,7 @@
             var persistenceType = Type.GetType(settings["Persistence"]);
 
 
-            var typeName = "Configure" + persistenceType.Name + "Persistence";
+            var typeName = "Configure" + persistenceType.Name;
 
             var configurerType = Type.GetType(typeName, false);
 
@@ -52,7 +53,40 @@
                 dc.Configure(config);
             }
 
-            return config.UsePersistence(persistenceType);
+            config.UsePersistence(persistenceType);
+        }
+
+        public static void DefineBuilder(this BusConfiguration config, IDictionary<string, string> settings)
+        {
+            if (!settings.ContainsKey("Builder"))
+            {
+                var builderDescriptor = Builders.Default;
+
+                if (builderDescriptor == null)
+                {
+                    return; //go with the default builder
+                }
+
+                settings = builderDescriptor.Settings;
+            }
+
+            var builderType = Type.GetType(settings["Builder"]);
+
+
+            var typeName = "Configure" + builderType.Name;
+
+            var configurerType = Type.GetType(typeName, false);
+
+            if (configurerType != null)
+            {
+                var configurer = Activator.CreateInstance(configurerType);
+
+                dynamic dc = configurer;
+
+                dc.Configure(config);
+            }
+
+            config.UseContainer(builderType);
         }
     }
 }
