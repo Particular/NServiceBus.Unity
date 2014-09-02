@@ -43,14 +43,14 @@
             builder.CustomConfigurationSource(configSource);
             builder.EnableInstallers();
             builder.DefineTransport(settings);
+            builder.DefineBuilder(settings);
             builder.RegisterComponents(r =>
             {
                 r.RegisterSingleton(runDescriptor.ScenarioContext.GetType(), runDescriptor.ScenarioContext);
                 r.RegisterSingleton(typeof(ScenarioContext), runDescriptor.ScenarioContext);
             });
 
-            builder.DefineBuilder(settings);
-         
+       
             var serializer = settings.GetOrNull("Serializer");
 
             if (serializer != null)

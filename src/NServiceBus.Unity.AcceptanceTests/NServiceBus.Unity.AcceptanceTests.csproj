@@ -34,12 +34,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="NServiceBus.AcceptanceTesting">
-      <HintPath>..\packages\NServiceBus.AcceptanceTesting.5.0.0-beta0003\lib\net45\NServiceBus.AcceptanceTesting.dll</HintPath>
+    <Reference Include="NServiceBus.AcceptanceTesting, Version=5.0.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NServiceBus.AcceptanceTesting.5.0.0-beta0004\lib\net45\NServiceBus.AcceptanceTesting.dll</HintPath>
     </Reference>
     <Reference Include="NServiceBus.Core, Version=5.0.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NServiceBus.5.0.0-beta0003\lib\net45\NServiceBus.Core.dll</HintPath>
+      <HintPath>..\packages\NServiceBus.5.0.0-beta0004\lib\net45\NServiceBus.Core.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
@@ -77,6 +78,7 @@
     <Compile Include="App_Packages\NServiceBus.AcceptanceTests\BasicMessaging\When_sending_a_message_that_is_registered_multiple_times_to_another_endpoint.cs" />
     <Compile Include="App_Packages\NServiceBus.AcceptanceTests\BasicMessaging\When_sending_a_message_to_another_endpoint.cs" />
     <Compile Include="App_Packages\NServiceBus.AcceptanceTests\BasicMessaging\When_sending_a_message_with_no_correlation_id.cs" />
+    <Compile Include="App_Packages\NServiceBus.AcceptanceTests\BasicMessaging\When_sending_from_a_send_only.cs" />
     <Compile Include="App_Packages\NServiceBus.AcceptanceTests\BasicMessaging\When_using_a_custom_correlation_id.cs" />
     <Compile Include="App_Packages\NServiceBus.AcceptanceTests\BasicMessaging\When_using_a_greedy_convention.cs" />
     <Compile Include="App_Packages\NServiceBus.AcceptanceTests\BasicMessaging\When_using_a_message_with_TimeToBeReceived_has_expired.cs" />
@@ -88,7 +90,7 @@
     <Compile Include="App_Packages\NServiceBus.AcceptanceTests\CriticalError\When_registering_a_custom_criticalErrorHandler.cs" />
     <Compile Include="App_Packages\NServiceBus.AcceptanceTests\DataBus\When_sending_databus_properties.cs" />
     <Compile Include="App_Packages\NServiceBus.AcceptanceTests\DataBus\When_sending_with_custom_IDataBus.cs" />
-    <Compile Include="App_Packages\NServiceBus.AcceptanceTests\DuableMessaging\When_sending_a_message_to_another_endpoint.cs" />
+    <Compile Include="App_Packages\NServiceBus.AcceptanceTests\DurableMessaging\When_sending_a_message_to_another_endpoint.cs" />
     <Compile Include="App_Packages\NServiceBus.AcceptanceTests\Encryption\When_using_encryption_with_custom_service.cs" />
     <Compile Include="App_Packages\NServiceBus.AcceptanceTests\Encryption\When_using_Rijndael_with_config.cs" />
     <Compile Include="App_Packages\NServiceBus.AcceptanceTests\Encryption\When_using_Rijndael_with_custom.cs" />
@@ -133,6 +135,7 @@
     <Compile Include="App_Packages\NServiceBus.AcceptanceTests\Sagas\When_an_endpoint_replies_to_a_message_published_by_a_saga.cs" />
     <Compile Include="App_Packages\NServiceBus.AcceptanceTests\Sagas\When_an_endpoint_replies_to_a_saga.cs" />
     <Compile Include="App_Packages\NServiceBus.AcceptanceTests\Sagas\When_a_saga_is_started_by_an_event_published_by_another_saga.cs" />
+    <Compile Include="App_Packages\NServiceBus.AcceptanceTests\Sagas\When_a_saga_is_started_by_a_base_event_published_by_another_saga.cs" />
     <Compile Include="App_Packages\NServiceBus.AcceptanceTests\Sagas\When_a_saga_message_goes_through_the_slr.cs" />
     <Compile Include="App_Packages\NServiceBus.AcceptanceTests\Sagas\When_doing_request_response_between_sagas.cs" />
     <Compile Include="App_Packages\NServiceBus.AcceptanceTests\Sagas\When_receiving_a_message_that_is_mapped_to_an_existing_saga_instance.cs" />

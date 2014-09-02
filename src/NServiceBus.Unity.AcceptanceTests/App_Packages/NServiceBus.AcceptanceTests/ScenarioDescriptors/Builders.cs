@@ -13,11 +13,12 @@
                 .Where(t => !t.Assembly.FullName.StartsWith("NServiceBus.Core"))//exclude the default builder
                 .ToList();
 
-            return from builder in builders select (new RunDescriptor
-            {
-                Key = builder.Name,
-                Settings = new Dictionary<string, string> { { "Builder", builder.AssemblyQualifiedName } }
-            });
+            return from builder in builders
+                   select (new RunDescriptor
+                       {
+                           Key = builder.Name,
+                           Settings = new Dictionary<string, string> { { "Builder", builder.AssemblyQualifiedName } }
+                       });
         }
 
         public static RunDescriptor Default

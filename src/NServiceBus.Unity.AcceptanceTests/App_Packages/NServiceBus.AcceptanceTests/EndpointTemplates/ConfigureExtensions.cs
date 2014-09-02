@@ -1,9 +1,7 @@
 ﻿namespace NServiceBus.AcceptanceTests.EndpointTemplates
 {
     using System;
-    using System.CodeDom;
     using System.Collections.Generic;
-    using Persistence;
     using ScenarioDescriptors;
 
     public static class ConfigureExtensions
@@ -51,6 +49,7 @@
                 dynamic dc = configurer;
 
                 dc.Configure(config);
+                return;
             }
 
             config.UsePersistence(persistenceType);
