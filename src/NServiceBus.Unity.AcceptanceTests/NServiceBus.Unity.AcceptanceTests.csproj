@@ -111,7 +111,7 @@
   <ItemGroup>
     <ProjectReference Include="..\NServiceBus.Unity\NServiceBus.Unity.csproj">
       <Project>{343b2e7a-e228-4b31-abb5-f5437b2e7a4c}</Project>
-      <Name>ObjectBuilder.Unity</Name>
+      <Name>NServiceBus.Unity</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

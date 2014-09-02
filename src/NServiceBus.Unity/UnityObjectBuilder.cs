@@ -1,12 +1,12 @@
-﻿namespace NServiceBus.ObjectBuilder.Unity
+﻿namespace NServiceBus.Unity
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Common;
     using Microsoft.Practices.Unity;
+    using ObjectBuilder.Common;
 
-    public class UnityObjectBuilder : IContainer
+    class UnityObjectBuilder : IContainer
     {
         IUnityContainer container;
 
