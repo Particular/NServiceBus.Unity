@@ -78,6 +78,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InternalsVisibleTo.cs" />
     <Compile Include="UnityBuilder.cs" />
     <Compile Include="ConfigureUnityBuilder.cs" />
     <Compile Include="DefaultInstances.cs" />
@@ -88,7 +89,9 @@
     <Compile Include="AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="FodyWeavers.xml">
