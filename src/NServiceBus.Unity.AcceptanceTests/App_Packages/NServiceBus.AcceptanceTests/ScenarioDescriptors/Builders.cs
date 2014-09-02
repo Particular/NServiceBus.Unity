@@ -7,8 +7,6 @@
 
     public static class Builders
     {
-        static IList<RunDescriptor> availableTransports;
-
         static IEnumerable<RunDescriptor> GetAllAvailable()
         {
             var builders = TypeScanner.GetAllTypesAssignableTo<ContainerDefinition>()

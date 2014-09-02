@@ -78,7 +78,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Unity.cs" />
+    <Compile Include="UnityBuilder.cs" />
     <Compile Include="ConfigureUnityBuilder.cs" />
     <Compile Include="DefaultInstances.cs" />
     <Compile Include="PropertyInjectionBuilderStrategy.cs" />
