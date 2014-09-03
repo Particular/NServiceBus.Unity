@@ -9,7 +9,8 @@
     class UnityObjectBuilder : IContainer
     {
         IUnityContainer container;
-
+        Dictionary<Type, List<Tuple<string, object>>> configuredProperties = new Dictionary<Type, List<Tuple<string, object>>>();
+        DefaultInstances defaultInstances;
         /// <summary>
         /// Instantiates the class with a new <see cref="UnityContainer"/>.
         /// </summary>
@@ -22,15 +23,19 @@
         /// Instantiates the class saving the given container.
         /// </summary>
         public UnityObjectBuilder(IUnityContainer container)
+            : this(container,new DefaultInstances())
+        {
+        }
+        private UnityObjectBuilder(IUnityContainer container, DefaultInstances defaultInstances)
         {
             this.container = container;
-            
+            this.defaultInstances = defaultInstances;
+
             var propertyInjectionExtension = this.container.Configure<PropertyInjectionContainerExtension>();
             if (propertyInjectionExtension == null)
             {
-                this.container.AddNewExtension<PropertyInjectionContainerExtension>();
+                this.container.AddExtension(new PropertyInjectionContainerExtension(this));
             }
-
         }
 
         public void Dispose()
@@ -44,12 +49,12 @@
         /// </summary>
         public IContainer BuildChildContainer()
         {
-            return new UnityObjectBuilder(container.CreateChildContainer());
+            return new UnityObjectBuilder(container.CreateChildContainer(),defaultInstances);
         }
 
         public object Build(Type typeToBuild)
         {
-            if (!DefaultInstances.Contains(typeToBuild))
+            if (!defaultInstances.Contains(typeToBuild))
             {
                 throw new ArgumentException(typeToBuild + " is not registered in the container");
             }
@@ -59,7 +64,7 @@
 
         public IEnumerable<object> BuildAll(Type typeToBuild)
         {
-            if (DefaultInstances.Contains(typeToBuild))
+            if (defaultInstances.Contains(typeToBuild))
             {
                 yield return container.Resolve(typeToBuild);
                 foreach (var component in container.ResolveAll(typeToBuild))
@@ -80,14 +85,14 @@
       
             foreach (var t in interfaces)
             {
-                if (DefaultInstances.Contains(t))
+                if (defaultInstances.Contains(t))
                 {
                     container.RegisterType(t, concreteComponent, Guid.NewGuid().ToString(), GetLifetimeManager(dependencyLifecycle));
                 }
                 else
                 {
                     container.RegisterType(t, concreteComponent, GetLifetimeManager(dependencyLifecycle));
-                    DefaultInstances.Add(t);
+                    defaultInstances.Add(t);
                 }
             }
         }
@@ -105,7 +110,7 @@
 
            foreach (var t in interfaces)
            {
-               if (DefaultInstances.Contains(t))
+               if (defaultInstances.Contains(t))
                {
                    container.RegisterType(t, Guid.NewGuid().ToString(), GetLifetimeManager(dependencyLifecycle), 
                        new InjectionFactory(unityContainer => componentFactory()));
@@ -113,25 +118,31 @@
                else
                {
                    container.RegisterType(t, GetLifetimeManager(dependencyLifecycle), new InjectionFactory(unityContainer => componentFactory()));
-                   DefaultInstances.Add(t);
+                   defaultInstances.Add(t);
                }
            }
         }
 
         public void ConfigureProperty(Type concreteComponent, string property, object value)
         {
-            PropertyInjectionBuilderStrategy.SetPropertyValue(concreteComponent, property, value);
+            List<Tuple<string, object>> properties;
+            if (!configuredProperties.TryGetValue(concreteComponent, out properties))
+            {
+                configuredProperties[concreteComponent] = properties = new List<Tuple<string, object>>();
+            }
+
+            properties.Add(new Tuple<string, object>(property, value));
         }
 
         public void RegisterSingleton(Type lookupType, object instance)
         {
-            DefaultInstances.Add(lookupType);
+            defaultInstances.Add(lookupType);
             container.RegisterInstance(lookupType, instance);
         }
 
         public bool HasComponent(Type componentType)
         {
-            return DefaultInstances.Contains(componentType);
+            return defaultInstances.Contains(componentType);
         }
 
         public void Release(object instance)
@@ -153,7 +164,7 @@
                    };
         }
 
-        private static LifetimeManager GetLifetimeManager(DependencyLifecycle dependencyLifecycle)
+        static LifetimeManager GetLifetimeManager(DependencyLifecycle dependencyLifecycle)
         {
             switch (dependencyLifecycle)
             {
@@ -165,6 +176,35 @@
                     return new HierarchicalLifetimeManager();
             }
             throw new ArgumentException("Unhandled lifecycle - " + dependencyLifecycle);
+        }
+
+
+        public void SetProperties(Type type, object target)
+        {
+            var properties = type.GetProperties();
+            foreach (var property in properties)
+            {
+                if (!property.CanWrite)
+                {
+                    continue;
+                }
+
+                if (defaultInstances.Contains(property.PropertyType))
+                {
+                    property.SetValue(target, container.Resolve(property.PropertyType), null);
+                }
+
+                List<Tuple<string, object>> configuredProperty;
+                if (configuredProperties.TryGetValue(type, out configuredProperty))
+                {
+                    var p = configuredProperty.FirstOrDefault(t => t.Item1 == property.Name);
+
+                    if (p != null)
+                    {
+                        property.SetValue(target, p.Item2, null);
+                    }
+                }
+            }
         }
     }
 }

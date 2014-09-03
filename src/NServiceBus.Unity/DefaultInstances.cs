@@ -3,21 +3,21 @@
     using System;
     using System.Collections.Generic;
 
-    static class DefaultInstances
+    class DefaultInstances
     {
-        static readonly HashSet<Type> typesWithDefaultInstances = new HashSet<Type>();
+        HashSet<Type> typesWithDefaultInstances = new HashSet<Type>();
 
-        public static bool Contains(Type type)
+        public bool Contains(Type type)
         {
             return typesWithDefaultInstances.Contains(type);
         }
 
-        public static void Add(Type type)
+        public void Add(Type type)
         {
             typesWithDefaultInstances.Add(type);
         }
 
-        public static void Clear()
+        public void Clear()
         {
             typesWithDefaultInstances.Clear();
         }
