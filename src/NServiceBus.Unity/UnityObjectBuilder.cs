@@ -26,7 +26,8 @@
             : this(container,new DefaultInstances())
         {
         }
-        private UnityObjectBuilder(IUnityContainer container, DefaultInstances defaultInstances)
+        
+        UnityObjectBuilder(IUnityContainer container, DefaultInstances defaultInstances)
         {
             this.container = container;
             this.defaultInstances = defaultInstances;

@@ -6,7 +6,7 @@ namespace NServiceBus
     using Unity;
 
     /// <summary>
-    /// Autofac Container
+    /// Unity Container
     /// </summary>
     public class UnityBuilder : ContainerDefinition
     {
