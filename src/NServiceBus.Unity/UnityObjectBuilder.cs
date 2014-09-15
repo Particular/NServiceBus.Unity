@@ -159,6 +159,7 @@
                 return new List<Type>();
             }
 
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
             return new List<Type>(t.GetInterfaces().Where(x => x.FullName != null && !x.FullName.StartsWith("System.")))
                    {
                        t
