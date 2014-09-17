@@ -9,19 +9,14 @@
     class UnityObjectBuilder : IContainer
     {
         IUnityContainer container;
-        Dictionary<Type, List<Tuple<string, object>>> configuredProperties = new Dictionary<Type, List<Tuple<string, object>>>();
+        Dictionary<Type, Dictionary<string, object>> configuredProperties = new Dictionary<Type, Dictionary<string, object>>();
         DefaultInstances defaultInstances;
-        /// <summary>
-        /// Instantiates the class with a new <see cref="UnityContainer"/>.
-        /// </summary>
+
         public UnityObjectBuilder()
             : this(new UnityContainer())
         {
         }
 
-        /// <summary>
-        /// Instantiates the class saving the given container.
-        /// </summary>
         public UnityObjectBuilder(IUnityContainer container)
             : this(container,new DefaultInstances())
         {
@@ -44,10 +39,6 @@
             //Injected at compile time
         }
 
-        /// <summary>
-        /// Returns a child instance of the container to facilitate deterministic disposal
-        /// of all resources built by the child container.
-        /// </summary>
         public IContainer BuildChildContainer()
         {
             return new UnityObjectBuilder(container.CreateChildContainer(),defaultInstances);
@@ -126,13 +117,13 @@
 
         public void ConfigureProperty(Type concreteComponent, string property, object value)
         {
-            List<Tuple<string, object>> properties;
+            Dictionary<string, object> properties;
             if (!configuredProperties.TryGetValue(concreteComponent, out properties))
             {
-                configuredProperties[concreteComponent] = properties = new List<Tuple<string, object>>();
+                configuredProperties[concreteComponent] = properties = new Dictionary<string, object>();
             }
 
-            properties.Add(new Tuple<string, object>(property, value));
+            properties[property] = value;
         }
 
         public void RegisterSingleton(Type lookupType, object instance)
@@ -196,14 +187,14 @@
                     property.SetValue(target, container.Resolve(property.PropertyType), null);
                 }
 
-                List<Tuple<string, object>> configuredProperty;
+                Dictionary<string, object> configuredProperty;
                 if (configuredProperties.TryGetValue(type, out configuredProperty))
                 {
-                    var p = configuredProperty.FirstOrDefault(t => t.Item1 == property.Name);
-
-                    if (p != null)
+                    object value;
+                    if (configuredProperty.TryGetValue(property.Name, out value))
                     {
-                        property.SetValue(target, p.Item2, null);
+                        property.SetValue(target, value, null);
+                        
                     }
                 }
             }
