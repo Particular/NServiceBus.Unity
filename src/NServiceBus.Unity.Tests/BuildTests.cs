@@ -1,34 +1,31 @@
-﻿namespace NServiceBus.Unity.Tests
+﻿using NServiceBus;
+using NServiceBus.Unity;
+using NUnit.Framework;
+
+[TestFixture]
+public class BuildTests
 {
-    using NUnit.Framework;
-
-    [TestFixture]
-    public class BuildTests
+    [Test]
+    public void ShouldResolveInterfaces()
     {
-        [Test]
-        public void ShouldResolveInterfaces()
-        {
-            var builder = new UnityObjectBuilder();
+        var builder = new UnityObjectBuilder();
 
 
-            builder.Configure(typeof(SomeClass), DependencyLifecycle.InstancePerCall);
+        builder.Configure(typeof(SomeClass), DependencyLifecycle.InstancePerCall);
 
 
-            var result = builder.Build(typeof(ISomeInterface));
+        var result = builder.Build(typeof(ISomeInterface));
 
-            Assert.IsInstanceOf<SomeClass>(result);
-        }
+        Assert.IsInstanceOf<SomeClass>(result);
+    }
 
-        class SomeClass : ISomeInterface
-        {
+    class SomeClass : ISomeInterface
+    {
 
-        }
+    }
 
-   
+    interface ISomeInterface
+    {
 
-        interface ISomeInterface
-        {
-
-        }
     }
 }
