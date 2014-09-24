@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NServiceBus.Unity</RootNamespace>
-    <AssemblyName>NServiceBus.Unity</AssemblyName>
+    <AssemblyName>NServiceBus.ObjectBuilder.Unity</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SignAssembly>true</SignAssembly>
@@ -26,7 +26,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\binaries\NServiceBus.Unity.xml</DocumentationFile>
+    <DocumentationFile>..\..\binaries\NServiceBus.ObjectBuilder.Unity.xml</DocumentationFile>
     <NoWarn>
     </NoWarn>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -39,7 +39,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\binaries\NServiceBus.Unity.xml</DocumentationFile>
+    <DocumentationFile>..\..\binaries\NServiceBus.ObjectBuilder.Unity.xml</DocumentationFile>
     <NoWarn>
     </NoWarn>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -92,8 +92,8 @@
     <Compile Include="AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\packaging\nuget\nservicebus.unity.nuspec">
-      <Link>nservicebus.unity.nuspec</Link>
+    <None Include="..\..\packaging\nuget\NServiceBus.ObjectBuilder.Unity.nuspec">
+      <Link>NServiceBus.ObjectBuilder.Unity.nuspec</Link>
     </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
