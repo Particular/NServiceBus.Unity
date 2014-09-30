@@ -66,6 +66,7 @@
     <Compile Include="BuildAllTests.cs" />
     <Compile Include="BuildTests.cs" />
     <Compile Include="SetUpFixture.cs" />
+    <Compile Include="When_using_existing_container.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
