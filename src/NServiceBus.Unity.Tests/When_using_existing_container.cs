@@ -12,7 +12,7 @@
             var container = new UnityContainer();
             container.RegisterType<SomeClass>();
 
-            var builder = new UnityObjectBuilder();
+            var builder = new UnityObjectBuilder(container);
 
             var result = builder.Build(typeof(ISomeInterface));
 
