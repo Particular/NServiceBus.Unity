@@ -20,10 +20,20 @@
         public UnityObjectBuilder(IUnityContainer container)
             : this(container,new DefaultInstances())
         {
+            foreach (var registration in container.Registrations)
+            {
+                var implementationType = registration.MappedToType;
+                if (!implementationType.IsAbstract && !implementationType.IsInterface)
+                {
+// ReSharper disable AccessToForEachVariableInClosure
+                    RegisterDefaultInstance(implementationType, registration.RegisteredType, () => (LifetimeManager)Activator.CreateInstance(registration.LifetimeManagerType));
+// ReSharper restore AccessToForEachVariableInClosure
+                }
+            }
         }
         
         UnityObjectBuilder(IUnityContainer container, DefaultInstances defaultInstances)
-        {
+        {            
             this.container = container;
             this.defaultInstances = defaultInstances;
 
@@ -32,6 +42,7 @@
             {
                 this.container.AddExtension(new PropertyInjectionContainerExtension(this));
             }
+
         }
 
         public void Dispose()
@@ -73,19 +84,29 @@
                 return;
             }
 
-            var interfaces = GetAllServiceTypesFor(concreteComponent);
-      
-            foreach (var t in interfaces)
+            RegisterDefaultInstances(concreteComponent, () => GetLifetimeManager(dependencyLifecycle));
+        }
+
+        void RegisterDefaultInstances(Type concreteComponent, Func<LifetimeManager> lifetimeManagerFactory)
+        {
+            var serviceTypes = GetAllServiceTypesFor(concreteComponent);
+
+            foreach (var t in serviceTypes)
             {
-                if (defaultInstances.Contains(t))
-                {
-                    container.RegisterType(t, concreteComponent, Guid.NewGuid().ToString(), GetLifetimeManager(dependencyLifecycle));
-                }
-                else
-                {
-                    container.RegisterType(t, concreteComponent, GetLifetimeManager(dependencyLifecycle));
-                    defaultInstances.Add(t);
-                }
+                RegisterDefaultInstance(concreteComponent, t, lifetimeManagerFactory);
+            }
+        }
+
+        void RegisterDefaultInstance(Type concreteComponent, Type serviceType, Func<LifetimeManager> lifetimeManagerFactory)
+        {
+            if (defaultInstances.Contains(serviceType))
+            {
+                container.RegisterType(serviceType, concreteComponent, Guid.NewGuid().ToString(), lifetimeManagerFactory());
+            }
+            else
+            {
+                container.RegisterType(serviceType, concreteComponent, lifetimeManagerFactory());
+                defaultInstances.Add(serviceType);
             }
         }
 
@@ -98,9 +119,9 @@
                 return;
             }
 
-           var interfaces = GetAllServiceTypesFor(componentType);
+           var serviceTypes = GetAllServiceTypesFor(componentType);
 
-           foreach (var t in interfaces)
+           foreach (var t in serviceTypes)
            {
                if (defaultInstances.Contains(t))
                {
@@ -147,14 +168,16 @@
         {
             if (t == null)
             {
-                return new List<Type>();
+                yield break;
             }
 
-            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
-            return new List<Type>(t.GetInterfaces().Where(x => x.FullName != null && !x.FullName.StartsWith("System.")))
-                   {
-                       t
-                   };
+            yield return t;
+// ReSharper disable ConditionIsAlwaysTrueOrFalse
+            foreach (var nonSystemInterface in t.GetInterfaces().Where(x => x.FullName != null && !x.FullName.StartsWith("System.")))
+            {
+                yield return nonSystemInterface;
+            }
+// ReSharper restore ConditionIsAlwaysTrueOrFalse
         }
 
         static LifetimeManager GetLifetimeManager(DependencyLifecycle dependencyLifecycle)
@@ -170,7 +193,6 @@
             }
             throw new ArgumentException("Unhandled lifecycle - " + dependencyLifecycle);
         }
-
 
         public void SetProperties(Type type, object target)
         {
