@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InternalsVisibleTo.cs" />
+    <Compile Include="RegisteringNotificationContainerExtension.cs" />
     <Compile Include="UnityBuilder.cs" />
     <Compile Include="ConfigureUnityBuilder_Obsoletes.cs" />
     <Compile Include="DefaultInstances.cs" />

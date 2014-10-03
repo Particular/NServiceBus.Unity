@@ -18,6 +18,20 @@
 
             Assert.IsInstanceOf<SomeClass>(result);
         }
+
+        [Test]
+        public void Interfaces_registered_in_the_container_after_wrapping_it_with_ObjectBuilder_are_resolvable_via_builder()
+        {
+            var container = new UnityContainer();
+
+            var builder = new UnityObjectBuilder(container);
+
+            container.RegisterType<ISomeInterface, SomeClass>();
+
+            var result = builder.Build(typeof(ISomeInterface));
+
+            Assert.IsInstanceOf<SomeClass>(result);
+        }
         
         [Test]
         public void Abstract_classes_registered_in_plain_container_are_resolvable_via_builder()
