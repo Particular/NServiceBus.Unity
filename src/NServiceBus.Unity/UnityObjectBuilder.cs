@@ -20,6 +20,14 @@
         public UnityObjectBuilder(IUnityContainer container)
             : this(container,new DefaultInstances())
         {
+            container.AddExtension(new RegisteringNotificationContainerExtension((from, to, lifetime) =>
+                {
+                    if (!defaultInstances.Contains(from))
+                    {
+                        defaultInstances.Add(from);
+                    }
+                }));
+
             foreach (var registration in container.Registrations)
             {
                 var implementationType = registration.MappedToType;
