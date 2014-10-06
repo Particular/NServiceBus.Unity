@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Unity", "NServiceBus.Unity\NServiceBus.Unity.csproj", "{343B2E7A-E228-4B31-ABB5-F5437B2E7A4C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Unity.AcceptanceTests", "NServiceBus.Unity.AcceptanceTests\NServiceBus.Unity.AcceptanceTests.csproj", "{FB342C36-9924-4E24-A484-CEE0C770BDBF}"
@@ -13,6 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{52BF26
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Unity.Tests", "NServiceBus.Unity.Tests\NServiceBus.Unity.Tests.csproj", "{8D9A9D71-9BD7-4A3B-9714-8425E059A3B5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AB6B83F7-A3A3-4887-B798-30AF670EC033}"
+	ProjectSection(SolutionItems) = preProject
+		..\packaging\nuget\NServiceBus.Unity.nuspec = ..\packaging\nuget\NServiceBus.Unity.nuspec
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
