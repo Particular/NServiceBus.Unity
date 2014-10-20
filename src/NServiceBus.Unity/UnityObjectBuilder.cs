@@ -26,7 +26,13 @@
                     {
                         defaultInstances.Add(from);
                     }
-                }));
+                }, (from, to, lifetime) =>
+                    {
+                        if (!defaultInstances.Contains(from))
+                        {
+                            defaultInstances.Add(from);
+                        }
+                    }));
 
             foreach (var registration in container.Registrations)
             {
