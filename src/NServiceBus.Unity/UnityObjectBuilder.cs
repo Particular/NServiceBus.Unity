@@ -18,7 +18,7 @@
         }
 
         public UnityObjectBuilder(IUnityContainer container)
-            : this(container,new DefaultInstances())
+            : this(container, new DefaultInstances())
         {
             container.AddExtension(new RegisteringNotificationContainerExtension((from, to, lifetime) =>
                 {
@@ -39,15 +39,15 @@
                 var implementationType = registration.MappedToType;
                 if (!implementationType.IsAbstract && !implementationType.IsInterface)
                 {
-// ReSharper disable AccessToForEachVariableInClosure
+                    // ReSharper disable AccessToForEachVariableInClosure
                     RegisterDefaultInstance(implementationType, registration.RegisteredType, () => (LifetimeManager)Activator.CreateInstance(registration.LifetimeManagerType));
-// ReSharper restore AccessToForEachVariableInClosure
+                    // ReSharper restore AccessToForEachVariableInClosure
                 }
             }
         }
-        
+
         UnityObjectBuilder(IUnityContainer container, DefaultInstances defaultInstances)
-        {            
+        {
             this.container = container;
             this.defaultInstances = defaultInstances;
 
@@ -66,7 +66,7 @@
 
         public IContainer BuildChildContainer()
         {
-            return new UnityObjectBuilder(container.CreateChildContainer(),defaultInstances);
+            return new UnityObjectBuilder(container.CreateChildContainer(), defaultInstances);
         }
 
         public object Build(Type typeToBuild)
@@ -97,8 +97,8 @@
             {
                 return;
             }
-
-            RegisterDefaultInstances(concreteComponent, () => GetLifetimeManager(dependencyLifecycle));
+            SingletonInstanceStore instanceStore = null;
+            RegisterDefaultInstances(concreteComponent, () => GetLifetimeManager(dependencyLifecycle, ref instanceStore));
         }
 
         void RegisterDefaultInstances(Type concreteComponent, Func<LifetimeManager> lifetimeManagerFactory)
@@ -126,28 +126,28 @@
 
         public void Configure<T>(Func<T> componentFactory, DependencyLifecycle dependencyLifecycle)
         {
-            var componentType = typeof (T);
+            var componentType = typeof(T);
 
             if (HasComponent(componentType))
             {
                 return;
             }
 
-           var serviceTypes = GetAllServiceTypesFor(componentType);
-
-           foreach (var t in serviceTypes)
-           {
-               if (defaultInstances.Contains(t))
-               {
-                   container.RegisterType(t, Guid.NewGuid().ToString(), GetLifetimeManager(dependencyLifecycle), 
-                       new InjectionFactory(unityContainer => componentFactory()));
-               }
-               else
-               {
-                   container.RegisterType(t, GetLifetimeManager(dependencyLifecycle), new InjectionFactory(unityContainer => componentFactory()));
-                   defaultInstances.Add(t);
-               }
-           }
+            var serviceTypes = GetAllServiceTypesFor(componentType);
+            SingletonInstanceStore instanceStore = null;
+            foreach (var t in serviceTypes)
+            {
+                if (defaultInstances.Contains(t))
+                {
+                    container.RegisterType(t, Guid.NewGuid().ToString(), GetLifetimeManager(dependencyLifecycle, ref instanceStore),
+                        new InjectionFactory(unityContainer => componentFactory()));
+                }
+                else
+                {
+                    container.RegisterType(t, GetLifetimeManager(dependencyLifecycle, ref instanceStore), new InjectionFactory(unityContainer => componentFactory()));
+                    defaultInstances.Add(t);
+                }
+            }
         }
 
         public void ConfigureProperty(Type concreteComponent, string property, object value)
@@ -186,22 +186,26 @@
             }
 
             yield return t;
-// ReSharper disable ConditionIsAlwaysTrueOrFalse
+            // ReSharper disable ConditionIsAlwaysTrueOrFalse
             foreach (var nonSystemInterface in t.GetInterfaces().Where(x => x.FullName != null && !x.FullName.StartsWith("System.")))
             {
                 yield return nonSystemInterface;
             }
-// ReSharper restore ConditionIsAlwaysTrueOrFalse
+            // ReSharper restore ConditionIsAlwaysTrueOrFalse
         }
 
-        static LifetimeManager GetLifetimeManager(DependencyLifecycle dependencyLifecycle)
+        static LifetimeManager GetLifetimeManager(DependencyLifecycle dependencyLifecycle, ref SingletonInstanceStore instanceStore)
         {
             switch (dependencyLifecycle)
             {
                 case DependencyLifecycle.InstancePerCall:
                     return new TransientLifetimeManager();
                 case DependencyLifecycle.SingleInstance:
-                    return new ContainerControlledLifetimeManager();
+                    if (instanceStore == null)
+                    {
+                        instanceStore = new SingletonInstanceStore();
+                    }
+                    return new SingletonLifetimeManager(instanceStore);
                 case DependencyLifecycle.InstancePerUnitOfWork:
                     return new HierarchicalLifetimeManager();
             }
@@ -230,7 +234,7 @@
                     if (configuredProperty.TryGetValue(property.Name, out value))
                     {
                         property.SetValue(target, value, null);
-                        
+
                     }
                 }
             }
