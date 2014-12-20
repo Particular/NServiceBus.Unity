@@ -1,5 +1,7 @@
 ﻿namespace NServiceBus.Unity.Tests
 {
+    using System;
+    using System.Linq;
     using Microsoft.Practices.Unity;
     using NUnit.Framework;
 
@@ -17,6 +19,45 @@
             var result = builder.Build(typeof(ISomeInterface));
 
             Assert.IsInstanceOf<SomeClass>(result);
+        }
+
+        [Test]
+        public void Existing_registrations_are_not_registered_twice()
+        {
+            var container = new UnityContainer();
+            container.RegisterType<ISomeInterface, NamedService1>("1");
+            container.RegisterType<ISomeInterface, NamedService2>("2");
+            container.RegisterType<ISomeInterface, NamedService3>("3");
+
+            var builder = new UnityObjectBuilder(container);
+
+            var result = builder.BuildAll(typeof(ISomeInterface));
+
+            Assert.AreEqual(3, result.Count());
+        }
+
+        [Test]
+        public void Named_instances_are_not_resolvable_via_Build()
+        {
+            var container = new UnityContainer();
+            container.RegisterType<ISomeInterface, NamedService1>("1");
+
+            var builder = new UnityObjectBuilder(container);
+
+            Assert.Throws<ArgumentException>( () => builder.Build(typeof(ISomeInterface)));
+        }
+
+        [Test]
+        public void Named_instances_registered_after_wrapping_container_are_not_resolvable_via_Build()
+        {
+            var container = new UnityContainer();
+
+            var builder = new UnityObjectBuilder(container);
+
+            container.RegisterType<ISomeInterface, NamedService1>("1");
+            
+
+            Assert.Throws<ArgumentException>(() => builder.Build(typeof(ISomeInterface)));
         }
 
         [Test]
@@ -126,6 +167,18 @@
         }
 
         interface ISomeInterface
+        {
+        }
+
+        class NamedService1 : ISomeInterface
+        {
+        }
+        
+        class NamedService2 : ISomeInterface
+        {
+        }
+
+        class NamedService3 : ISomeInterface
         {
         }
     }

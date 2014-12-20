@@ -20,28 +20,17 @@
         public UnityObjectBuilder(IUnityContainer container)
             : this(container, new DefaultInstances())
         {
-            container.AddExtension(new RegisteringNotificationContainerExtension((from, to, lifetime) =>
-                {
-                    if (!defaultInstances.Contains(from))
-                    {
-                        defaultInstances.Add(from);
-                    }
-                }, (from, to, lifetime) =>
-                    {
-                        if (!defaultInstances.Contains(from))
-                        {
-                            defaultInstances.Add(from);
-                        }
-                    }));
+            container.AddExtension(new RegisteringNotificationContainerExtension(
+                (from, to, lifetime) => defaultInstances.Add(from), 
+                (from, to, lifetime) => defaultInstances.Add(from)));
 
             foreach (var registration in container.Registrations)
             {
                 var implementationType = registration.MappedToType;
-                if (!implementationType.IsAbstract && !implementationType.IsInterface)
+                //Register the fact that user registered a default instance himself (only if not a named registration)
+                if (!implementationType.IsAbstract && !implementationType.IsInterface && registration.Name == null)
                 {
-                    // ReSharper disable AccessToForEachVariableInClosure
-                    RegisterDefaultInstance(implementationType, registration.RegisteredType, () => (LifetimeManager)Activator.CreateInstance(registration.LifetimeManagerType));
-                    // ReSharper restore AccessToForEachVariableInClosure
+                    defaultInstances.Add(registration.RegisteredType);
                 }
             }
         }
@@ -84,10 +73,10 @@
             if (defaultInstances.Contains(typeToBuild))
             {
                 yield return container.Resolve(typeToBuild);
-                foreach (var component in container.ResolveAll(typeToBuild))
-                {
-                    yield return component;
-                }
+            }
+            foreach (var component in container.ResolveAll(typeToBuild))
+            {
+                yield return component;
             }
         }
 
