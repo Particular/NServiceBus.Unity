@@ -17,7 +17,7 @@ namespace NServiceBus.Unity
             var target = context.Existing;
             if (!type.FullName.StartsWith("Microsoft.Practices"))
             {
-                unityContainer.SetProperties(type, target);
+                unityContainer.SetProperties(target.GetType(), target);
             }
         }
     }
