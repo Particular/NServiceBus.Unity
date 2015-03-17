@@ -153,7 +153,7 @@
         public void RegisterSingleton(Type lookupType, object instance)
         {
             defaultInstances.Add(lookupType);
-            container.RegisterInstance(lookupType, instance);
+            container.RegisterType(lookupType, new SingletonLifetimeManager(new SingletonInstanceStore()), new InjectionFactory(unityContainer => instance));
         }
 
         public bool HasComponent(Type componentType)
