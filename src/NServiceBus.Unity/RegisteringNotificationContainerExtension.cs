@@ -30,12 +30,18 @@ namespace NServiceBus.Unity
 
         void OnContextRegistering(object sender, RegisterEventArgs args)
         {
-            onRegisteringCallback(args.TypeFrom, args.TypeTo, args.LifetimeManager);
+            if (args.Name == null)
+            {
+                onRegisteringCallback(args.TypeFrom, args.TypeTo, args.LifetimeManager);
+            }
         }
 
         void OnContextRegisteringInstance(object sender, RegisterInstanceEventArgs args)
         {
-            onRegisteringInstanceCallback(args.RegisteredType, args.Instance, args.LifetimeManager);
+            if (args.Name == null)
+            {
+                onRegisteringInstanceCallback(args.RegisteredType, args.Instance, args.LifetimeManager);
+            }
         }
 
     }
