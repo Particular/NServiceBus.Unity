@@ -55,7 +55,7 @@
             var builder = new UnityObjectBuilder(container);
 
             container.RegisterType<ISomeInterface, NamedService1>("1");
-            
+
 
             Assert.Throws<ArgumentException>(() => builder.Build(typeof(ISomeInterface)));
         }
@@ -73,7 +73,7 @@
 
             Assert.IsInstanceOf<SomeClass>(result);
         }
-        
+
         [Test]
         public void Abstract_classes_registered_in_plain_container_are_resolvable_via_builder()
         {
@@ -114,7 +114,24 @@
 
             Assert.IsNotNull(result.Dependency);
         }
-        
+
+        [Test]
+        public void Existing_instances_registred_in_the_container_can_be_injected_via_property_only_once_set()
+        {
+            var container = new UnityContainer();
+
+            var builder = new UnityObjectBuilder(container);
+            builder.Configure(typeof(PropertyInjectionHandler), DependencyLifecycle.InstancePerUnitOfWork);
+            container.RegisterType<ISomeInterface, SomeClass>(new HierarchicalLifetimeManager());
+
+            var childBuilder = builder.BuildChildContainer();
+
+            var result = (PropertyInjectionHandler)childBuilder.Build(typeof(PropertyInjectionHandler));
+
+            Assert.IsNotNull(result.Dependency);
+        }
+
+
         [Test]
         public void Existing_instances_registred_in_the_container_can_be_injected_via_constructor()
         {
@@ -140,13 +157,30 @@
 
         class PropertyInjectionHandler : IHandleMessages<object>
         {
-            public ISomeInterface Dependency { get; set; }
+            ISomeInterface dependency;
+
+            public ISomeInterface Dependency
+            {
+                get
+                {
+                    return this.dependency;
+                }
+                set
+                {
+                    if (this.dependency != null)
+                    {
+                        throw new Exception("Dependency has already a value");
+                    }
+
+                    this.dependency = value;
+                }
+            }
 
             public void Handle(object message)
             {
             }
         }
-        
+
         class ConstructorInjectionHandler : IHandleMessages<object>
         {
             readonly ISomeInterface dependency;
@@ -173,7 +207,7 @@
         class NamedService1 : ISomeInterface
         {
         }
-        
+
         class NamedService2 : ISomeInterface
         {
         }

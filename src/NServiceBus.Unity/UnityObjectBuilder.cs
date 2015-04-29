@@ -80,6 +80,11 @@
             }
         }
 
+        internal bool IsCorrectContext(IUnityContainer unityContainer)
+        {
+            return object.ReferenceEquals(unityContainer, this.container);
+        }
+
         public void Configure(Type concreteComponent, DependencyLifecycle dependencyLifecycle)
         {
             if (HasComponent(concreteComponent))
