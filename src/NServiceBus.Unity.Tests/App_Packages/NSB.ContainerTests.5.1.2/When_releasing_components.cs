@@ -10,25 +10,26 @@ namespace NServiceBus.ContainerTests
         [Test]
         public void Transient_component_should_be_destructed_called()
         {
-            using (var builder = TestContainerBuilder.ConstructBuilder())
-            {
-                builder.Configure(typeof(TransientClass), DependencyLifecycle.InstancePerCall);
+            var builder = TestContainerBuilder.ConstructBuilder();
 
-                var comp = (TransientClass) builder.Build(typeof(TransientClass));
-                comp.Name = "Jon";
+            builder.Configure(typeof(TransientClass), DependencyLifecycle.InstancePerCall);
 
-                var weak = new WeakReference(comp);
+            var comp = (TransientClass)builder.Build(typeof(TransientClass));
+            comp.Name = "Jon";
 
-                builder.Release(comp);
-                // ReSharper disable once RedundantAssignment
-                comp = null;
+            var weak = new WeakReference(comp);
 
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
+            builder.Release(comp);
+            // ReSharper disable once RedundantAssignment
+            comp = null;
 
-                Assert.IsFalse(weak.IsAlive);
-                Assert.IsTrue(TransientClass.Destructed);
-            }
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+
+            Assert.IsFalse(weak.IsAlive);
+            Assert.IsTrue(TransientClass.Destructed);
+
+            builder.Dispose();
 
         }
 
