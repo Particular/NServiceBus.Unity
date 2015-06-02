@@ -9,7 +9,9 @@
     class UnityObjectBuilder : IContainer
     {
         IUnityContainer container;
-        Dictionary<Type, Dictionary<string, object>> configuredProperties = new Dictionary<Type, Dictionary<string, object>>();
+
+        Dictionary<Type, Dictionary<string, object>> configuredProperties;
+
         DefaultInstances defaultInstances;
 
         public UnityObjectBuilder()
@@ -18,7 +20,7 @@
         }
 
         public UnityObjectBuilder(IUnityContainer container)
-            : this(container, new DefaultInstances())
+            : this(container, new DefaultInstances(), new Dictionary<Type, Dictionary<string, object>>())
         {
             container.AddExtension(new RegisteringNotificationContainerExtension(
                 (from, to, lifetime) => defaultInstances.Add(from), 
@@ -35,10 +37,11 @@
             }
         }
 
-        UnityObjectBuilder(IUnityContainer container, DefaultInstances defaultInstances)
+        UnityObjectBuilder(IUnityContainer container, DefaultInstances defaultInstances, Dictionary<Type, Dictionary<string, object>> configuredProperties)
         {
             this.container = container;
             this.defaultInstances = defaultInstances;
+            this.configuredProperties = configuredProperties;
 
             var propertyInjectionExtension = this.container.Configure<PropertyInjectionContainerExtension>();
             if (propertyInjectionExtension == null)
@@ -55,7 +58,7 @@
 
         public IContainer BuildChildContainer()
         {
-            return new UnityObjectBuilder(container.CreateChildContainer(), defaultInstances);
+            return new UnityObjectBuilder(container.CreateChildContainer(), defaultInstances, configuredProperties);
         }
 
         public object Build(Type typeToBuild)
