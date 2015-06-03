@@ -85,7 +85,7 @@
 
         internal bool IsCorrectContext(IUnityContainer unityContainer)
         {
-            return ReferenceEquals(unityContainer, this.container);
+            return this.container.Equals(unityContainer);
         }
 
         public void Configure(Type concreteComponent, DependencyLifecycle dependencyLifecycle)
