@@ -18,19 +18,15 @@ namespace NServiceBus.Unity
             return lifetime.GetValue() as IUnityContainer;
         }
 
-        private bool IsCorrectContext(IBuilderContext context)
-        {
-            var container = this.GetUnityFromBuildContext(context);
-            return this.unityContainer.IsCorrectContext(container);
-        }
-
         public override void PreBuildUp(IBuilderContext context)
         {
             var type = context.BuildKey.Type;
             var target = context.Existing;
-            if (!type.FullName.StartsWith("Microsoft.Practices") && this.IsCorrectContext(context))
+            var container = this.GetUnityFromBuildContext(context);
+
+            if (!type.FullName.StartsWith("Microsoft.Practices"))
             {
-                unityContainer.SetProperties(target.GetType(), target);
+                unityContainer.SetProperties(target.GetType(), target, container);
             }
         }
     }

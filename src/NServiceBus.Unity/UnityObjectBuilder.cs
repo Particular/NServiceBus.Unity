@@ -9,9 +9,7 @@
     class UnityObjectBuilder : IContainer
     {
         IUnityContainer container;
-
-        Dictionary<Type, Dictionary<string, object>> configuredProperties;
-
+        Dictionary<Type, Dictionary<string, object>> configuredProperties = new Dictionary<Type, Dictionary<string, object>>();
         DefaultInstances defaultInstances;
 
         public UnityObjectBuilder()
@@ -20,7 +18,7 @@
         }
 
         public UnityObjectBuilder(IUnityContainer container)
-            : this(container, new DefaultInstances(), new Dictionary<Type, Dictionary<string, object>>())
+            : this(container, new DefaultInstances())
         {
             container.AddExtension(new RegisteringNotificationContainerExtension(
                 (from, to, lifetime) => defaultInstances.Add(from), 
@@ -37,11 +35,10 @@
             }
         }
 
-        UnityObjectBuilder(IUnityContainer container, DefaultInstances defaultInstances, Dictionary<Type, Dictionary<string, object>> configuredProperties)
+        UnityObjectBuilder(IUnityContainer container, DefaultInstances defaultInstances)
         {
             this.container = container;
             this.defaultInstances = defaultInstances;
-            this.configuredProperties = configuredProperties;
 
             var propertyInjectionExtension = this.container.Configure<PropertyInjectionContainerExtension>();
             if (propertyInjectionExtension == null)
@@ -58,7 +55,7 @@
 
         public IContainer BuildChildContainer()
         {
-            return new UnityObjectBuilder(container.CreateChildContainer(), defaultInstances, configuredProperties);
+            return new UnityObjectBuilder(container.CreateChildContainer(), defaultInstances);
         }
 
         public object Build(Type typeToBuild)
@@ -81,11 +78,6 @@
             {
                 yield return component;
             }
-        }
-
-        internal bool IsCorrectContext(IUnityContainer unityContainer)
-        {
-            return this.container.Equals(unityContainer);
         }
 
         public void Configure(Type concreteComponent, DependencyLifecycle dependencyLifecycle)
@@ -209,7 +201,7 @@
             throw new ArgumentException("Unhandled lifecycle - " + dependencyLifecycle);
         }
 
-        public void SetProperties(Type type, object target)
+        public void SetProperties(Type type, object target, IUnityContainer containerForResolve)
         {
             var properties = type.GetProperties();
             foreach (var property in properties)
@@ -221,7 +213,7 @@
 
                 if (defaultInstances.Contains(property.PropertyType))
                 {
-                    property.SetValue(target, container.Resolve(property.PropertyType), null);
+                    property.SetValue(target, containerForResolve.Resolve(property.PropertyType), null);
                 }
 
                 Dictionary<string, object> configuredProperty;

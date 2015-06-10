@@ -115,22 +115,6 @@
             Assert.IsNotNull(result.Dependency);
         }
 
-        [Test]
-        public void Existing_instances_registred_in_the_container_can_be_injected_via_property_only_once_set()
-        {
-            var container = new UnityContainer();
-
-            var builder = new UnityObjectBuilder(container);
-            builder.Configure(typeof(PropertyInjectionHandler), DependencyLifecycle.InstancePerUnitOfWork);
-            container.RegisterType<ISomeInterface, SomeClass>(new HierarchicalLifetimeManager());
-
-            var childBuilder = builder.BuildChildContainer();
-
-            var result = (PropertyInjectionHandler)childBuilder.Build(typeof(PropertyInjectionHandler));
-
-            Assert.IsNotNull(result.Dependency);
-        }
-
 
         [Test]
         public void Existing_instances_registred_in_the_container_can_be_injected_via_constructor()
