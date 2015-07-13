@@ -55,7 +55,7 @@
             var builder = new UnityObjectBuilder(container);
 
             container.RegisterType<ISomeInterface, NamedService1>("1");
-            
+
 
             Assert.Throws<ArgumentException>(() => builder.Build(typeof(ISomeInterface)));
         }
@@ -73,7 +73,7 @@
 
             Assert.IsInstanceOf<SomeClass>(result);
         }
-        
+
         [Test]
         public void Abstract_classes_registered_in_plain_container_are_resolvable_via_builder()
         {
@@ -114,7 +114,8 @@
 
             Assert.IsNotNull(result.Dependency);
         }
-        
+
+
         [Test]
         public void Existing_instances_registred_in_the_container_can_be_injected_via_constructor()
         {
@@ -140,13 +141,30 @@
 
         class PropertyInjectionHandler : IHandleMessages<object>
         {
-            public ISomeInterface Dependency { get; set; }
+            ISomeInterface dependency;
+
+            public ISomeInterface Dependency
+            {
+                get
+                {
+                    return dependency;
+                }
+                set
+                {
+                    if (dependency != null)
+                    {
+                        throw new Exception("Dependency has already a value");
+                    }
+
+                    dependency = value;
+                }
+            }
 
             public void Handle(object message)
             {
             }
         }
-        
+
         class ConstructorInjectionHandler : IHandleMessages<object>
         {
             readonly ISomeInterface dependency;
@@ -173,7 +191,7 @@
         class NamedService1 : ISomeInterface
         {
         }
-        
+
         class NamedService2 : ISomeInterface
         {
         }
