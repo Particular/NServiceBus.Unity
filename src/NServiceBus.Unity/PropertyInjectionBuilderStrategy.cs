@@ -22,7 +22,7 @@ namespace NServiceBus.Unity
         {
             var type = context.BuildKey.Type;
             var target = context.Existing;
-            var container = this.GetUnityFromBuildContext(context);
+            var container = GetUnityFromBuildContext(context);
 
             if (!type.FullName.StartsWith("Microsoft.Practices"))
             {

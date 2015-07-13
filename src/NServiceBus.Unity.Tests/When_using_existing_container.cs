@@ -147,16 +147,16 @@
             {
                 get
                 {
-                    return this.dependency;
+                    return dependency;
                 }
                 set
                 {
-                    if (this.dependency != null)
+                    if (dependency != null)
                     {
                         throw new Exception("Dependency has already a value");
                     }
 
-                    this.dependency = value;
+                    dependency = value;
                 }
             }
 
