@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
     using Microsoft.Practices.Unity;
     using ObjectBuilder.Common;
 
@@ -203,7 +204,7 @@
 
         public void SetProperties(Type type, object target, IUnityContainer containerForResolve)
         {
-            var properties = type.GetProperties();
+            var properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
             foreach (var property in properties)
             {
                 if (!property.CanWrite)
