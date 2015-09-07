@@ -3,6 +3,7 @@ namespace NServiceBus.ContainerTests
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Dynamic;
     using System.Linq;
     using NServiceBus;
     using NUnit.Framework;
@@ -163,6 +164,19 @@ namespace NServiceBus.ContainerTests
                 Assert.NotNull(component.ConcreteDependency, "Concrete classed should be property injected");
                 Assert.NotNull(component.InterfaceDependency, "Interfaces should be property injected");
                 Assert.NotNull(component.concreteDependencyWithSetOnly, "Set only properties should be supported");
+            }
+        } 
+        
+        [Test]
+        public void Static_setter_dependencies_should_not_be_supported()
+        {
+            using (var builder = TestContainerBuilder.ConstructBuilder())
+            {
+                builder.Configure(typeof(SomeClass), DependencyLifecycle.InstancePerCall);
+                builder.Configure(typeof(ClassWithAStaticPropertyMatchingDependency), DependencyLifecycle.SingleInstance);
+
+                var component = (ClassWithAStaticPropertyMatchingDependency)builder.Build(typeof(ClassWithAStaticPropertyMatchingDependency));
+                Assert.Null(ClassWithAStaticPropertyMatchingDependency.StaticProperty);
             }
         }
 
@@ -359,6 +373,11 @@ namespace NServiceBus.ContainerTests
 
     public interface IWithSetterDependencies
     {
+    }
+
+    public class ClassWithAStaticPropertyMatchingDependency
+    {
+        public static ISomeInterface StaticProperty { get; set; }
     }
 
     public class ClassWithSetterDependencies : IWithSetterDependencies
