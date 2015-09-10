@@ -54,6 +54,35 @@ namespace NServiceBus.ContainerTests
         }
 
         [Test]
+        public void Should_resolve_child_container_instance_first()
+        {
+            using (var builder = TestContainerBuilder.ConstructBuilder())
+            {
+                builder.Configure(typeof(InstanceToReplaceInNested_Parent), DependencyLifecycle.SingleInstance);
+                var instance1 = builder.Build(typeof(IInstanceToReplaceInNested));
+                object instance2;
+                using (var nestedContainer = builder.BuildChildContainer())
+                {
+                    nestedContainer.Configure(typeof(InstanceToReplaceInNested_Child), DependencyLifecycle.SingleInstance);
+                    instance2 = nestedContainer.Build(typeof(IInstanceToReplaceInNested));
+                }
+
+                Assert.AreNotSame(instance1, instance2);
+            }
+        }
+
+        public interface IInstanceToReplaceInNested
+        {
+        }
+
+        public class InstanceToReplaceInNested_Parent : IInstanceToReplaceInNested
+        {
+        }
+        public class InstanceToReplaceInNested_Child : IInstanceToReplaceInNested
+        {
+        }
+
+        [Test]
         public void Instance_per_call_components_should_not_be_shared_across_child_containers()
         {
             using (var builder = TestContainerBuilder.ConstructBuilder())
