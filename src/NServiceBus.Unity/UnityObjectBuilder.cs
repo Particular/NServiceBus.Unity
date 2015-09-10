@@ -11,6 +11,7 @@
         IUnityContainer container;
         Dictionary<Type, Dictionary<string, object>> configuredProperties = new Dictionary<Type, Dictionary<string, object>>();
         DefaultInstances defaultInstances;
+        Func<Type, bool> ancestorsHaveDefaultInstanceOf;
 
         public UnityObjectBuilder()
             : this(new UnityContainer())
@@ -18,7 +19,7 @@
         }
 
         public UnityObjectBuilder(IUnityContainer container)
-            : this(container, new DefaultInstances())
+            : this(container, _ => false)
         {
             container.AddExtension(new RegisteringNotificationContainerExtension(
                 (from, to, lifetime) => defaultInstances.Add(from), 
@@ -35,10 +36,11 @@
             }
         }
 
-        UnityObjectBuilder(IUnityContainer container, DefaultInstances defaultInstances)
+        UnityObjectBuilder(IUnityContainer container, Func<Type, bool> ancestorsHaveDefaultInstanceOf)
         {
             this.container = container;
-            this.defaultInstances = defaultInstances;
+            defaultInstances = new DefaultInstances();
+            this.ancestorsHaveDefaultInstanceOf = ancestorsHaveDefaultInstanceOf;
 
             var propertyInjectionExtension = this.container.Configure<PropertyInjectionContainerExtension>();
             if (propertyInjectionExtension == null)
@@ -55,12 +57,12 @@
 
         public IContainer BuildChildContainer()
         {
-            return new UnityObjectBuilder(container.CreateChildContainer(), defaultInstances);
+            return new UnityObjectBuilder(container.CreateChildContainer(), HasDefaultInstanceOf);
         }
 
         public object Build(Type typeToBuild)
         {
-            if (!defaultInstances.Contains(typeToBuild))
+            if (!HasDefaultInstanceOf(typeToBuild))
             {
                 throw new ArgumentException(typeToBuild + " is not registered in the container");
             }
@@ -70,7 +72,7 @@
 
         public IEnumerable<object> BuildAll(Type typeToBuild)
         {
-            if (defaultInstances.Contains(typeToBuild))
+            if (HasDefaultInstanceOf(typeToBuild))
             {
                 yield return container.Resolve(typeToBuild);
             }
@@ -78,6 +80,11 @@
             {
                 yield return component;
             }
+        }
+
+        bool HasDefaultInstanceOf(Type typeToBuild)
+        {
+            return ancestorsHaveDefaultInstanceOf(typeToBuild) || defaultInstances.Contains(typeToBuild);
         }
 
         public void Configure(Type concreteComponent, DependencyLifecycle dependencyLifecycle)
@@ -126,7 +133,7 @@
             SingletonInstanceStore instanceStore = null;
             foreach (var t in serviceTypes)
             {
-                if (defaultInstances.Contains(t))
+                if (HasDefaultInstanceOf(t))
                 {
                     container.RegisterType(t, Guid.NewGuid().ToString(), GetLifetimeManager(dependencyLifecycle, ref instanceStore),
                         new InjectionFactory(unityContainer => componentFactory()));
@@ -158,7 +165,7 @@
 
         public bool HasComponent(Type componentType)
         {
-            return defaultInstances.Contains(componentType);
+            return HasDefaultInstanceOf(componentType);
         }
 
         public void Release(object instance)
@@ -211,7 +218,7 @@
                     continue;
                 }
 
-                if (defaultInstances.Contains(property.PropertyType))
+                if (HasDefaultInstanceOf(property.PropertyType))
                 {
                     property.SetValue(target, containerForResolve.Resolve(property.PropertyType), null);
                 }
