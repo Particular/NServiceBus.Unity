@@ -97,6 +97,9 @@
     <Compile Include="AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\packaging\nuget\NServiceBus.Unity.nuspec">
+      <Link>NServiceBus.Unity.nuspec</Link>
+    </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
