@@ -167,17 +167,12 @@
 
         class ConstructorInjectionHandler : IHandleMessages<object>
         {
-            readonly ISomeInterface dependency;
-
             public ConstructorInjectionHandler(ISomeInterface dependency)
             {
-                this.dependency = dependency;
+                Dependency = dependency;
             }
 
-            public ISomeInterface Dependency
-            {
-                get { return dependency; }
-            }
+            public ISomeInterface Dependency { get; }
 
             public void Handle(object message)
             {
