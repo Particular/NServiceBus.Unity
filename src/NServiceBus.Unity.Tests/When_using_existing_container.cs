@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using System.Threading.Tasks;
     using Microsoft.Practices.Unity;
     using NUnit.Framework;
 
@@ -160,9 +161,11 @@
                 }
             }
 
-            public void Handle(object message)
+            public Task Handle(object message, IMessageHandlerContext context)
             {
+                return Task.FromResult(0);
             }
+
         }
 
         class ConstructorInjectionHandler : IHandleMessages<object>
@@ -174,8 +177,9 @@
 
             public ISomeInterface Dependency { get; }
 
-            public void Handle(object message)
+            public Task Handle(object message, IMessageHandlerContext context)
             {
+                return Task.FromResult(0);
             }
         }
 
