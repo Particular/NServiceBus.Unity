@@ -269,5 +269,8 @@
     <Compile Include="App_Packages\NSB.AcceptanceTests.6.0.0-unstable1187\Versioning\When_multiple_versions_of_a_message_is_published.cs" />
     <Compile Include="App_Packages\NSB.AcceptanceTests.6.0.0-unstable1187\Volatile\When_sending_to_non_durable_endpoint.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
