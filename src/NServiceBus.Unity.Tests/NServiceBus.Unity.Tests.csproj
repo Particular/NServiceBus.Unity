@@ -69,13 +69,12 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Packages\NSB.ContainerTests.6.0.0-unstable1187\TestContainerBuilder.cs" />
-    <Compile Include="App_Packages\NSB.ContainerTests.6.0.0-unstable1187\When_building_components.cs" />
-    <Compile Include="App_Packages\NSB.ContainerTests.6.0.0-unstable1187\When_disposing_the_builder.cs" />
-    <Compile Include="App_Packages\NSB.ContainerTests.6.0.0-unstable1187\When_querying_for_registered_components.cs" />
-    <Compile Include="App_Packages\NSB.ContainerTests.6.0.0-unstable1187\When_registering_components.cs" />
-    <Compile Include="App_Packages\NSB.ContainerTests.6.0.0-unstable1187\When_releasing_components.cs" />
-    <Compile Include="App_Packages\NSB.ContainerTests.6.0.0-unstable1187\When_using_nested_containers.cs" />
+    <Compile Include="App_Packages\NSB.ContainerTests.6.0.0-unstable1509\TestContainerBuilder.cs" />
+    <Compile Include="App_Packages\NSB.ContainerTests.6.0.0-unstable1509\When_building_components.cs" />
+    <Compile Include="App_Packages\NSB.ContainerTests.6.0.0-unstable1509\When_disposing_the_builder.cs" />
+    <Compile Include="App_Packages\NSB.ContainerTests.6.0.0-unstable1509\When_querying_for_registered_components.cs" />
+    <Compile Include="App_Packages\NSB.ContainerTests.6.0.0-unstable1509\When_registering_components.cs" />
+    <Compile Include="App_Packages\NSB.ContainerTests.6.0.0-unstable1509\When_using_nested_containers.cs" />
     <Compile Include="BuildAllTests.cs" />
     <Compile Include="BuildTests.cs" />
     <Compile Include="SetUpFixture.cs" />
