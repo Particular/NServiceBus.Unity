@@ -3,22 +3,24 @@
   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <id>NServiceBus.Unity</id>
     <title>NServiceBus Unity</title>
-    <version>4.0.0-alpha0</version>
-    <authors>NServiceBus Ltd</authors>
-    <owners>Udi Dahan, Andreas Ohlund, John Simons</owners>
-    <licenseUrl>http://particular.net/LicenseAgreement</licenseUrl>
-    <projectUrl>http://particular.net/</projectUrl>
-    <iconUrl>http://s3.amazonaws.com/nuget.images/NServiceBus_32.png</iconUrl>
-    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <version>$version$</version>
+    <authors>$authors$</authors>
+    <owners>$owners$</owners>
+    <licenseUrl>$licenseUrl$</licenseUrl>
+    <projectUrl>$projectUrl$</projectUrl>
+    <iconUrl>$iconUrl$</iconUrl>
+    <copyright>$copyright$</copyright>
+    <requireLicenseAcceptance>$requireLicenseAcceptance$</requireLicenseAcceptance>
     <description>The Unity Container for the nservicebus</description>
     <releaseNotes></releaseNotes>
-    <copyright>Copyright 2010-2014 NServiceBus. All rights reserved</copyright>
     <tags>nservicebus servicebus msmq cqrs publish subscribe</tags>
-    <dependencies/>
+    <dependencies>
+      <dependency id="NServiceBus" version="[4.4.2,5.0.0)" />>
+      <dependency id="Unity" version="[2.1.505.2, 3.0.0)" />
+      <dependency id="Unity.Interception" version="[2.1.505.2, 3.0.0)" />
+    </dependencies>
   </metadata>
   <files>
     <file src="..\..\binaries\NServiceBus.ObjectBuilder.Unity.???" target="lib\net40" />
-    <file src="tools\install.ps1" target="tools" />
-    <!--<file src="..\..\src\ObjectBuilder.Unity\**\*.cs" target="src" />-->
   </files>
 </package>

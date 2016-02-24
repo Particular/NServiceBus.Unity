@@ -1,0 +1,224 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FB342C36-9924-4E24-A484-CEE0C770BDBF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NServiceBus.Unity.AcceptanceTests</RootNamespace>
+    <AssemblyName>NServiceBus.Unity.AcceptanceTests</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Interception.2.1.505.2\lib\NET35\Microsoft.Practices.Unity.Interception.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception.Configuration, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Interception.2.1.505.2\lib\NET35\Microsoft.Practices.Unity.Interception.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NServiceBus, Version=4.7.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NServiceBus.Interfaces.4.7.12\lib\net40\NServiceBus.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NServiceBus.AcceptanceTesting, Version=4.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NServiceBus.AcceptanceTesting.4.7.12\lib\net40\NServiceBus.AcceptanceTesting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NServiceBus.Core, Version=4.7.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NServiceBus.4.7.12\lib\net40\NServiceBus.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Messaging" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Audit\When_a_message_is_audited.cs" />
+    <Compile Include="Audit\When_using_auditing_as_a_feature.cs" />
+    <Compile Include="BasicMessaging\When_aborting_the_behavior_chain.cs" />
+    <Compile Include="BasicMessaging\When_Deferring_a_message.cs" />
+    <Compile Include="BasicMessaging\When_handling_current_message_later.cs" />
+    <Compile Include="BasicMessaging\When_registering_a_callback_for_a_local_message.cs" />
+    <Compile Include="BasicMessaging\When_sending_a_message_that_is_registered_multiple_times_to_another_endpoint.cs" />
+    <Compile Include="BasicMessaging\When_sending_a_message_to_another_endpoint.cs" />
+    <Compile Include="BasicMessaging\When_sending_a_message_with_no_correlation_id.cs" />
+    <Compile Include="BasicMessaging\When_starting_a_send_only.cs" />
+    <Compile Include="BasicMessaging\When_using_a_custom_correlation_id.cs" />
+    <Compile Include="BasicMessaging\When_using_a_greedy_convention.cs" />
+    <Compile Include="BasicMessaging\When_using_a_message_with_TimeToBeReceived_has_expired.cs" />
+    <Compile Include="BasicMessaging\When_using_a_message_with_TimeToBeReceived_has_not_expired.cs" />
+    <Compile Include="BasicMessaging\When_using_callbacks_in_a_scaleout_scenario.cs" />
+    <Compile Include="BusStartStop\When_bus_start_and_stops_with_a_pending_message.cs" />
+    <Compile Include="BusStartStop\When_bus_start_raises_an_inmemory_message.cs" />
+    <Compile Include="Configuration\When_a_config_override_is_found.cs" />
+    <Compile Include="DataBus\When_sending_databus_properties.cs" />
+    <Compile Include="Distributor\Processing_SLR_message.cs" />
+    <Compile Include="Encryption\When_using_encryption.cs" />
+    <Compile Include="Encryption\When_using_encryption_with_custom_service.cs" />
+    <Compile Include="Encryption\When_using_encryption_with_multikey.cs" />
+    <Compile Include="EndpointTemplates\ConfigureExtensions.cs" />
+    <Compile Include="EndpointTemplates\ContextAppender.cs" />
+    <Compile Include="EndpointTemplates\DefaultServer.cs" />
+    <Compile Include="Exceptions\Cant_convert_to_TransportMessage\SerializerCorrupter.cs" />
+    <Compile Include="Exceptions\Cant_convert_to_TransportMessage\When_cant_convert_to_TransportMessage.cs" />
+    <Compile Include="Exceptions\Cant_convert_to_TransportMessage\When_cant_convert_to_TransportMessage_NoTransactions.cs" />
+    <Compile Include="Exceptions\Cant_convert_to_TransportMessage\When_cant_convert_to_TransportMessage_SuppressedDTC.cs" />
+    <Compile Include="Exceptions\StackTraceAssert.cs" />
+    <Compile Include="Exceptions\When_handler_and_Module_End_throws.cs" />
+    <Compile Include="Exceptions\When_Module_Begin_and_different_End_throws.cs" />
+    <Compile Include="Exceptions\When_Module_Error_throws.cs" />
+    <Compile Include="Exceptions\When_processing_a_message_without_an_id.cs" />
+    <Compile Include="Exceptions\When_serialization_throws.cs" />
+    <Compile Include="Gateway\When_doing_request_response_between_sites.cs" />
+    <Compile Include="Gateway\When_doing_request_response_with_databus_between_sites.cs" />
+    <Compile Include="Gateway\When_doing_request_return.cs" />
+    <Compile Include="Gateway\When_sending_a_message_to_another_site.cs" />
+    <Compile Include="Gateway\When_sending_a_message_via_the_gateway.cs" />
+    <Compile Include="HostInformation\When_a_message_is_received.cs" />
+    <Compile Include="InMemory\When_calling_DoNotContinueDispatchingCurrentMessageToHandlers_from_inmemory.cs" />
+    <Compile Include="InMemory\When_raising_an_in_memory_event.cs" />
+    <Compile Include="InMemory\When_raising_an_in_memory_event_from_a_non_handler.cs" />
+    <Compile Include="InMemory\When_raising_an_in_memory_event_transport_mutators_should_not_be_called.cs" />
+    <Compile Include="MessageMutators\Issue_1980.cs" />
+    <Compile Include="MessageMutators\When_defining_outgoing_message_mutators.cs" />
+    <Compile Include="MessageMutators\When_outgoing_mutator_replaces_message_instance.cs" />
+    <Compile Include="Msmq\When_Audit_OverrideTimeToBeReceived_set_and_transactional_Msmq.cs" />
+    <Compile Include="Msmq\When_publishing_with_authorizer.cs" />
+    <Compile Include="Msmq\When_TimeToBeReceivedOnForwardedMessages_set_and_transactional_Msmq.cs" />
+    <Compile Include="Msmq\When_TimeToBeReceived_set_and_DTC_Msmq.cs" />
+    <Compile Include="Msmq\When_TimeToBeReceived_set_and_receivetransaction_Msmq.cs" />
+    <Compile Include="Msmq\When_unsubscribing_with_authorizer.cs" />
+    <Compile Include="NServiceBusAcceptanceTest.cs" />
+    <Compile Include="PipelineExtension\FilteringWhatGetsAudited.cs" />
+    <Compile Include="PipelineExtension\MutingHandlerExceptions.cs" />
+    <Compile Include="PipelineExtension\SkipDeserialization.cs" />
+    <Compile Include="PubSub\Subscriptions.cs" />
+    <Compile Include="PubSub\When_multi_subscribing_to_a_polymorphic_event.cs" />
+    <Compile Include="PubSub\When_publishing_an_event.cs" />
+    <Compile Include="PubSub\When_publishing_an_event_using_a_broker_transport_with_centralized_routing.cs" />
+    <Compile Include="PubSub\When_publishing_an_event_with_only_local_messagehandlers.cs" />
+    <Compile Include="PubSub\When_publishing_an_event_with_overridden_local_address.cs" />
+    <Compile Include="PubSub\When_publishing_an_event_with_the_subscriber_scaled_out.cs" />
+    <Compile Include="PubSub\When_subscribing_to_a_base_event_from_different_publishers.cs" />
+    <Compile Include="PubSub\When_subscribing_to_a_polymorphic_event.cs" />
+    <Compile Include="Retries\When_doing_flr_with_default_settings.cs" />
+    <Compile Include="Retries\When_messages_fails_flr.cs" />
+    <Compile Include="Retries\When_message_fails_with_retries_set_to_0.cs" />
+    <Compile Include="Retries\When_sending_a_message_off_to_slr.cs" />
+    <Compile Include="Sagas\Issue_1819.cs" />
+    <Compile Include="Sagas\Issue_2044.cs" />
+    <Compile Include="Sagas\When_an_endpoint_replies_to_a_saga.cs" />
+    <Compile Include="Sagas\When_a_saga_is_started_by_an_event_published_by_another_saga.cs" />
+    <Compile Include="Sagas\When_a_saga_message_goes_through_the_slr.cs" />
+    <Compile Include="Sagas\When_doing_request_response_between_sagas.cs" />
+    <Compile Include="Sagas\When_message_has_a_saga_id.cs" />
+    <Compile Include="Sagas\When_receiving_a_message_that_is_mapped_to_an_existing_saga_instance.cs" />
+    <Compile Include="Sagas\When_receiving_a_message_that_should_complete_saga.cs" />
+    <Compile Include="Sagas\When_receiving_a_message_that_should_start_a_saga.cs" />
+    <Compile Include="Sagas\When_reply_from_a_finder.cs" />
+    <Compile Include="Sagas\When_sending_from_a_saga_handle.cs" />
+    <Compile Include="Sagas\When_sending_from_a_saga_timeout.cs" />
+    <Compile Include="Sagas\When_timeout_hit_not_found_saga.cs" />
+    <Compile Include="Sagas\When_two_sagas_subscribe_to_the_same_event.cs" />
+    <Compile Include="Sagas\When_using_a_received_message_for_timeout.cs" />
+    <Compile Include="Sagas\When_using_contain_saga_data.cs" />
+    <Compile Include="ScenarioDescriptors\AllBuilders.cs" />
+    <Compile Include="ScenarioDescriptors\AllSerializers.cs" />
+    <Compile Include="ScenarioDescriptors\AllSubscriptionStorages.cs" />
+    <Compile Include="ScenarioDescriptors\AllTransports.cs" />
+    <Compile Include="ScenarioDescriptors\Builders.cs" />
+    <Compile Include="ScenarioDescriptors\SagaPersisters.cs" />
+    <Compile Include="ScenarioDescriptors\Serializers.cs" />
+    <Compile Include="ScenarioDescriptors\SubscriptionPersisters.cs" />
+    <Compile Include="ScenarioDescriptors\SubscriptionStorages.cs" />
+    <Compile Include="ScenarioDescriptors\TimeoutPersisters.cs" />
+    <Compile Include="ScenarioDescriptors\Transports.cs" />
+    <Compile Include="Scheduling\When_scheduling_a_recurring_task.cs" />
+    <Compile Include="Timeouts\OutdatedTimeoutPersister.cs" />
+    <Compile Include="Timeouts\UpdatedTimeoutPersister.cs" />
+    <Compile Include="Timeouts\When_dispatched_timeout_already_removed_from_timeout_storage.cs" />
+    <Compile Include="Timeouts\When_dispatching_deferred_message_fails_without_dtc.cs" />
+    <Compile Include="Timeouts\When_endpoint_uses_no_timeout_persistence.cs" />
+    <Compile Include="Timeouts\When_endpoint_uses_outdated_sql_transport_with_disabled_dtc.cs" />
+    <Compile Include="Timeouts\When_endpoint_uses_outdated_sql_transport_with_dtc.cs" />
+    <Compile Include="Timeouts\When_endpoint_uses_outdated_timeout_persistence_without_dtc.cs" />
+    <Compile Include="Timeouts\When_endpoint_uses_outdated_timeout_persistence_with_disabled_dtc.cs" />
+    <Compile Include="Timeouts\When_endpoint_uses_outdated_timeout_persistence_with_dtc.cs" />
+    <Compile Include="Timeouts\When_endpoint_uses_updated_sql_transport_with_disabled_dtc.cs" />
+    <Compile Include="Timeouts\When_endpoint_uses_updated_timeout_persistence.cs" />
+    <Compile Include="Transactions\FakePromotableResourceManager.cs" />
+    <Compile Include="Transactions\When_receiving_a_message_with_dtc_disabled.cs" />
+    <Compile Include="Transactions\When_receiving_a_message_with_dtc_enabled.cs" />
+    <Compile Include="Transactions\When_receiving_a_message_with_the_default_settings.cs" />
+    <Compile Include="Transactions\When_receiving_a_message_with_transactions_disabled.cs" />
+    <Compile Include="Transactions\When_sending_a_message_from_a_non_transactional_endpoint_with_a_ambient_transaction_enabled.cs" />
+    <Compile Include="Transactions\When_sending_messages_within_an_ambient_transaction.cs" />
+    <Compile Include="Versioning\When_multiple_versions_of_a_message_is_published.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NServiceBus.Unity\NServiceBus.Unity.csproj">
+      <Project>{343b2e7a-e228-4b31-abb5-f5437b2e7a4c}</Project>
+      <Name>NServiceBus.Unity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
