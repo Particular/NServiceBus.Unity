@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Unity", "NServi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Unity.AcceptanceTests", "NServiceBus.Unity.AcceptanceTests\NServiceBus.Unity.AcceptanceTests.csproj", "{FB342C36-9924-4E24-A484-CEE0C770BDBF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Unity.Tests", "NServiceBus.Unity.Tests\NServiceBus.Unity.Tests.csproj", "{1D212041-51FA-4D3D-9E4F-6F8F73B4CBD3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{FB342C36-9924-4E24-A484-CEE0C770BDBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB342C36-9924-4E24-A484-CEE0C770BDBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB342C36-9924-4E24-A484-CEE0C770BDBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D212041-51FA-4D3D-9E4F-6F8F73B4CBD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D212041-51FA-4D3D-9E4F-6F8F73B4CBD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D212041-51FA-4D3D-9E4F-6F8F73B4CBD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D212041-51FA-4D3D-9E4F-6F8F73B4CBD3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
