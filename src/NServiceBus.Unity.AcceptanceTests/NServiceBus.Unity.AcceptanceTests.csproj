@@ -7,8 +7,8 @@
     <ProjectGuid>{FB342C36-9924-4E24-A484-CEE0C770BDBF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ObjectBuilder.Unity.AcceptanceTests</RootNamespace>
-    <AssemblyName>ObjectBuilder.Unity.AcceptanceTests</AssemblyName>
+    <RootNamespace>NServiceBus.Unity.AcceptanceTests</RootNamespace>
+    <AssemblyName>NServiceBus.Unity.AcceptanceTests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -77,12 +77,6 @@
     <Reference Include="System.Messaging" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ObjectBuilder.Unity\ObjectBuilder.Unity.csproj">
-      <Project>{343b2e7a-e228-4b31-abb5-f5437b2e7a4c}</Project>
-      <Name>ObjectBuilder.Unity</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
@@ -212,6 +206,12 @@
     <Compile Include="Transactions\When_sending_a_message_from_a_non_transactional_endpoint_with_a_ambient_transaction_enabled.cs" />
     <Compile Include="Transactions\When_sending_messages_within_an_ambient_transaction.cs" />
     <Compile Include="Versioning\When_multiple_versions_of_a_message_is_published.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NServiceBus.Unity\NServiceBus.Unity.csproj">
+      <Project>{343b2e7a-e228-4b31-abb5-f5437b2e7a4c}</Project>
+      <Name>NServiceBus.Unity</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
