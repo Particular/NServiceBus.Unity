@@ -150,6 +150,7 @@
                 {
                     return dependency;
                 }
+                // ReSharper disable once UnusedMember.Local
                 set
                 {
                     if (dependency != null)
