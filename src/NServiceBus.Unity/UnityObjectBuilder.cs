@@ -208,7 +208,7 @@
             throw new ArgumentException("Unhandled lifecycle - " + dependencyLifecycle);
         }
 
-        public void SetProperties(Type type, object target, IUnityContainer containerForResolve)
+        public void SetProperties(Type type, object target, Func<Type, object> resolveMethod)
         {
             var properties = type.GetProperties();
             foreach (var property in properties)
@@ -220,7 +220,7 @@
 
                 if (HasDefaultInstanceOf(property.PropertyType))
                 {
-                    property.SetValue(target, containerForResolve.Resolve(property.PropertyType), null);
+                    property.SetValue(target, resolveMethod(property.PropertyType), null);
                 }
 
                 Dictionary<string, object> configuredProperty;
