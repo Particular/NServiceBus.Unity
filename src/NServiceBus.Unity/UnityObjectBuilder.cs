@@ -4,15 +4,10 @@
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.Practices.Unity;
-    using ObjectBuilder.Common;
+    using NServiceBus.ObjectBuilder.Common;
 
     class UnityObjectBuilder : IContainer
     {
-        IUnityContainer container;
-        Dictionary<Type, Dictionary<string, object>> configuredProperties = new Dictionary<Type, Dictionary<string, object>>();
-        DefaultInstances defaultInstances;
-        Func<Type, bool> ancestorsHaveDefaultInstanceOf;
-
         public UnityObjectBuilder()
             : this(new UnityContainer())
         {
@@ -22,7 +17,7 @@
             : this(container, _ => false)
         {
             container.AddExtension(new RegisteringNotificationContainerExtension(
-                (from, to, lifetime) => defaultInstances.Add(from), 
+                (from, to, lifetime) => defaultInstances.Add(from),
                 (from, to, lifetime) => defaultInstances.Add(from)));
 
             foreach (var registration in container.Registrations)
@@ -47,7 +42,6 @@
             {
                 this.container.AddExtension(new PropertyInjectionContainerExtension(this));
             }
-
         }
 
         public void Dispose()
@@ -82,11 +76,6 @@
             }
         }
 
-        bool HasDefaultInstanceOf(Type typeToBuild)
-        {
-            return ancestorsHaveDefaultInstanceOf(typeToBuild) || defaultInstances.Contains(typeToBuild);
-        }
-
         public void Configure(Type concreteComponent, DependencyLifecycle dependencyLifecycle)
         {
             if (HasComponent(concreteComponent))
@@ -95,29 +84,6 @@
             }
             SingletonInstanceStore instanceStore = null;
             RegisterDefaultInstances(concreteComponent, () => GetLifetimeManager(dependencyLifecycle, ref instanceStore));
-        }
-
-        void RegisterDefaultInstances(Type concreteComponent, Func<LifetimeManager> lifetimeManagerFactory)
-        {
-            var serviceTypes = GetAllServiceTypesFor(concreteComponent);
-
-            foreach (var t in serviceTypes)
-            {
-                RegisterDefaultInstance(concreteComponent, t, lifetimeManagerFactory);
-            }
-        }
-
-        void RegisterDefaultInstance(Type concreteComponent, Type serviceType, Func<LifetimeManager> lifetimeManagerFactory)
-        {
-            if (defaultInstances.Contains(serviceType))
-            {
-                container.RegisterType(serviceType, concreteComponent, Guid.NewGuid().ToString(), lifetimeManagerFactory());
-            }
-            else
-            {
-                container.RegisterType(serviceType, concreteComponent, lifetimeManagerFactory());
-                defaultInstances.Add(serviceType);
-            }
         }
 
         public void Configure<T>(Func<T> componentFactory, DependencyLifecycle dependencyLifecycle)
@@ -145,18 +111,7 @@
                 }
             }
         }
-
-        public void ConfigureProperty(Type concreteComponent, string property, object value)
-        {
-            Dictionary<string, object> properties;
-            if (!configuredProperties.TryGetValue(concreteComponent, out properties))
-            {
-                configuredProperties[concreteComponent] = properties = new Dictionary<string, object>();
-            }
-
-            properties[property] = value;
-        }
-
+        
         public void RegisterSingleton(Type lookupType, object instance)
         {
             defaultInstances.Add(lookupType);
@@ -172,6 +127,34 @@
         {
             //Not sure if I need to call this or not!
             container.Teardown(instance);
+        }
+
+        bool HasDefaultInstanceOf(Type typeToBuild)
+        {
+            return ancestorsHaveDefaultInstanceOf(typeToBuild) || defaultInstances.Contains(typeToBuild);
+        }
+
+        void RegisterDefaultInstances(Type concreteComponent, Func<LifetimeManager> lifetimeManagerFactory)
+        {
+            var serviceTypes = GetAllServiceTypesFor(concreteComponent);
+
+            foreach (var t in serviceTypes)
+            {
+                RegisterDefaultInstance(concreteComponent, t, lifetimeManagerFactory);
+            }
+        }
+
+        void RegisterDefaultInstance(Type concreteComponent, Type serviceType, Func<LifetimeManager> lifetimeManagerFactory)
+        {
+            if (defaultInstances.Contains(serviceType))
+            {
+                container.RegisterType(serviceType, concreteComponent, Guid.NewGuid().ToString(), lifetimeManagerFactory());
+            }
+            else
+            {
+                container.RegisterType(serviceType, concreteComponent, lifetimeManagerFactory());
+                defaultInstances.Add(serviceType);
+            }
         }
 
         static IEnumerable<Type> GetAllServiceTypesFor(Type t)
@@ -222,18 +205,11 @@
                 {
                     property.SetValue(target, resolveMethod(property.PropertyType), null);
                 }
-
-                Dictionary<string, object> configuredProperty;
-                if (configuredProperties.TryGetValue(type, out configuredProperty))
-                {
-                    object value;
-                    if (configuredProperty.TryGetValue(property.Name, out value))
-                    {
-                        property.SetValue(target, value, null);
-
-                    }
-                }
             }
         }
+
+        Func<Type, bool> ancestorsHaveDefaultInstanceOf;
+        IUnityContainer container;
+        DefaultInstances defaultInstances;
     }
 }
