@@ -9,12 +9,16 @@
     class UnityObjectBuilder : IContainer
     {
         public UnityObjectBuilder()
-            : this(new UnityContainer())
+            : this(new UnityContainer(), true)
+        {
+        }
+        public UnityObjectBuilder(IUnityContainer container)
+            : this(container, false)
         {
         }
 
-        public UnityObjectBuilder(IUnityContainer container)
-            : this(container, _ => false)
+        public UnityObjectBuilder(IUnityContainer container, bool owned)
+            : this(container, _ => false, owned)
         {
             container.AddExtension(new RegisteringNotificationContainerExtension(
                 (from, to, lifetime) => defaultInstances.Add(from),
@@ -31,8 +35,9 @@
             }
         }
 
-        UnityObjectBuilder(IUnityContainer container, Func<Type, bool> ancestorsHaveDefaultInstanceOf)
+        UnityObjectBuilder(IUnityContainer container, Func<Type, bool> ancestorsHaveDefaultInstanceOf, bool owned)
         {
+            this.owned = owned;
             this.container = container;
             defaultInstances = new DefaultInstances();
             this.ancestorsHaveDefaultInstanceOf = ancestorsHaveDefaultInstanceOf;
@@ -49,9 +54,19 @@
             //Injected at compile time
         }
 
+        void DisposeManaged()
+        {
+            if (!owned)
+            {
+                return;
+            }
+
+            container?.Dispose();
+        }
+
         public IContainer BuildChildContainer()
         {
-            return new UnityObjectBuilder(container.CreateChildContainer(), HasDefaultInstanceOf);
+            return new UnityObjectBuilder(container.CreateChildContainer(), HasDefaultInstanceOf, true);
         }
 
         public object Build(Type typeToBuild)
@@ -111,7 +126,7 @@
                 }
             }
         }
-        
+
         public void RegisterSingleton(Type lookupType, object instance)
         {
             defaultInstances.Add(lookupType);
@@ -211,5 +226,6 @@
         Func<Type, bool> ancestorsHaveDefaultInstanceOf;
         IUnityContainer container;
         DefaultInstances defaultInstances;
+        private bool owned;
     }
 }
