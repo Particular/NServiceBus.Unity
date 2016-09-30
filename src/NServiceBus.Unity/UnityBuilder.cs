@@ -17,15 +17,24 @@ namespace NServiceBus
         /// <returns>The new container wrapper.</returns>
         public override ObjectBuilder.Common.IContainer CreateContainer(ReadOnlySettings settings)
         {
-            IUnityContainer existingContainer;
+            ContainerHolder containerHolder;
 
-            if (settings.TryGet("ExistingContainer", out existingContainer))
+            if (settings.TryGet(out containerHolder))
             {
-                return new UnityObjectBuilder(existingContainer);
-
+                return new UnityObjectBuilder(containerHolder.ExistingContainer);
             }
 
             return new UnityObjectBuilder();
         }
+
+        internal class ContainerHolder
+         {
+             public ContainerHolder(IUnityContainer container)
+             {
+                 ExistingContainer = container;
+             }
+ 
+             public IUnityContainer ExistingContainer { get; }
+         }
     }
 }

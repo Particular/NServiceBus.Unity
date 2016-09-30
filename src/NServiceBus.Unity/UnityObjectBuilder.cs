@@ -11,17 +11,18 @@
         IUnityContainer container;
         Dictionary<Type, Dictionary<string, object>> configuredProperties = new Dictionary<Type, Dictionary<string, object>>();
         DefaultInstances defaultInstances;
+        private bool owned;
 
         public UnityObjectBuilder()
-            : this(new UnityContainer())
+            : this(new UnityContainer(), new DefaultInstances(), true)
         {
         }
 
         public UnityObjectBuilder(IUnityContainer container)
-            : this(container, new DefaultInstances())
+            : this(container, new DefaultInstances(), false)
         {
             container.AddExtension(new RegisteringNotificationContainerExtension(
-                (from, to, lifetime) => defaultInstances.Add(from), 
+                (from, to, lifetime) => defaultInstances.Add(from),
                 (from, to, lifetime) => defaultInstances.Add(from)));
 
             foreach (var registration in container.Registrations)
@@ -35,8 +36,9 @@
             }
         }
 
-        UnityObjectBuilder(IUnityContainer container, DefaultInstances defaultInstances)
+        public UnityObjectBuilder(IUnityContainer container, DefaultInstances defaultInstances, bool owned)
         {
+            this.owned = owned;
             this.container = container;
             this.defaultInstances = defaultInstances;
 
@@ -53,9 +55,19 @@
             //Injected at compile time
         }
 
+        void DisposeManaged()
+        {
+            if (!owned)
+            {
+                return;
+            }
+
+            container?.Dispose();
+        }
+
         public IContainer BuildChildContainer()
         {
-            return new UnityObjectBuilder(container.CreateChildContainer(), defaultInstances);
+            return new UnityObjectBuilder(container.CreateChildContainer(), defaultInstances, owned);
         }
 
         public object Build(Type typeToBuild)

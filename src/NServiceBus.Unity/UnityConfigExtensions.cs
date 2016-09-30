@@ -13,7 +13,7 @@ namespace NServiceBus
         /// </summary>
         public static void UseExistingContainer(this ContainerCustomizations customizations, IUnityContainer existingContainer)
         {
-            customizations.Settings.Set("ExistingContainer", existingContainer);
+            customizations.Settings.Set<UnityBuilder.ContainerHolder>(new UnityBuilder.ContainerHolder(existingContainer));
         }
     }
 }
