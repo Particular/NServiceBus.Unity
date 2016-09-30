@@ -10,5 +10,4 @@ public class SetUpFixture
     {
         TestContainerBuilder.ConstructBuilder = () => new UnityObjectBuilder();
     }
-
 }
