@@ -72,6 +72,7 @@
     <Compile Include="App_Packages\NSB.ContainerTests.5.1.2\When_using_nested_containers.cs" />
     <Compile Include="BuildAllTests.cs" />
     <Compile Include="BuildTests.cs" />
+    <Compile Include="DisposalTests.cs" />
     <Compile Include="SetUpFixture.cs" />
     <Compile Include="When_resolving_all.cs" />
     <Compile Include="When_using_existing_container.cs" />
@@ -85,6 +86,9 @@
       <Project>{343B2E7A-E228-4B31-ABB5-F5437B2E7A4C}</Project>
       <Name>NServiceBus.Unity</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
