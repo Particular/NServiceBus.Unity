@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2017
+VisualStudioVersion = 15.0.26430.12
+MinimumVisualStudioVersion = 15.0.26430.12
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Unity", "NServiceBus.Unity\NServiceBus.Unity.csproj", "{343B2E7A-E228-4B31-ABB5-F5437B2E7A4C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Unity.AcceptanceTests", "NServiceBus.Unity.AcceptanceTests\NServiceBus.Unity.AcceptanceTests.csproj", "{FB342C36-9924-4E24-A484-CEE0C770BDBF}"
