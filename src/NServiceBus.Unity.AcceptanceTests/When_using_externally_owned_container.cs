@@ -34,6 +34,7 @@
             {
                 EndpointSetup<DefaultServer>((config, desc) =>
                 {
+                    config.SendFailedMessagesTo("error");
                     var container = new UnityContainer();
                     var decorator = new ContainerDecorator(container);
 
