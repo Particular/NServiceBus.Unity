@@ -22,11 +22,11 @@
   <ItemGroup>
     <PackageReference Include="Unity" Version="4.0.1" />
     <PackageReference Include="Unity.Interception" Version="4.0.1" />
-    <PackageReference Include="Janitor.Fody" Version="1.5.1" />
+    <PackageReference Include="Janitor.Fody" Version="1.5.1" PrivateAssets="all" />
     <PackageReference Include="NServiceBus" Version="7.0.0-alpharelease0051" />
-    <PackageReference Include="Obsolete.Fody" Version="4.2.4" />
-    <PackageReference Include="Particular.CodeRules" Version="0.2.0" />
-    <PackageReference Include="Fody" Version="2.1.2" />
+    <PackageReference Include="Obsolete.Fody" Version="4.2.4" PrivateAssets="all" />
+    <PackageReference Include="Particular.CodeRules" Version="0.2.0" PrivateAssets="all" />
+    <PackageReference Include="Fody" Version="2.1.2" PrivateAssets="all" />
     <None Include="..\..\GitVersion.yml" Link="GitVersion.yml" />
   </ItemGroup>
 </Project>
