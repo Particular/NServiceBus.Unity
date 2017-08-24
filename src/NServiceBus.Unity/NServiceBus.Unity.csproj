@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net452</TargetFramework>
     <AssemblyName>NServiceBus.ObjectBuilder.Unity</AssemblyName>
-    <NuSpecFileName>NServiceBus.Unity</NuSpecFileName>
+    <PackageId>NServiceBus.Unity</PackageId>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>$(SolutionDir)NServiceBus.snk</AssemblyOriginatorKeyFile>
