@@ -5,24 +5,20 @@
 namespace NServiceBus
 {
     [ObsoleteExAttribute(Message="NServiceBus.Unity has been deprecated. Using another container is advised.  Pleas" +
-        "e see https://docs.particular.net/nservicebus/containers/#supported-containers f" +
-        "or a list of supported containers.", TreatAsErrorFromVersion="8.0")]
+        "e see upgrade guide for a list of supported containers.", TreatAsErrorFromVersion="8.0")]
     public class UnityBuilder : NServiceBus.Container.ContainerDefinition
     {
         public UnityBuilder() { }
         [ObsoleteExAttribute(Message="NServiceBus.Unity has been deprecated. Using another container is advised.  Pleas" +
-            "e see https://docs.particular.net/nservicebus/containers/#supported-containers f" +
-            "or a list of supported containers.", TreatAsErrorFromVersion="8.0")]
+            "e see upgrade guide for a list of supported containers.", TreatAsErrorFromVersion="8.0")]
         public override NServiceBus.ObjectBuilder.Common.IContainer CreateContainer(NServiceBus.Settings.ReadOnlySettings settings) { }
     }
     [ObsoleteExAttribute(Message="NServiceBus.Unity has been deprecated. Using another container is advised.  Pleas" +
-        "e see https://docs.particular.net/nservicebus/containers/#supported-containers f" +
-        "or a list of supported containers.", TreatAsErrorFromVersion="8.0")]
+        "e see upgrade guide for a list of supported containers.", TreatAsErrorFromVersion="8.0")]
     public class static UnityConfigExtensions
     {
         [ObsoleteExAttribute(Message="NServiceBus.Unity has been deprecated. Using another container is advised.  Pleas" +
-            "e see https://docs.particular.net/nservicebus/containers/#supported-containers f" +
-            "or a list of supported containers.", TreatAsErrorFromVersion="8.0")]
+            "e see upgrade guide for a list of supported containers.", TreatAsErrorFromVersion="8.0")]
         public static void UseExistingContainer(this NServiceBus.Container.ContainerCustomizations customizations, Microsoft.Practices.Unity.IUnityContainer existingContainer) { }
     }
 }
