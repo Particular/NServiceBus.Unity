@@ -22,4 +22,7 @@
     <PackageReference Include="NServiceBus.ContainerTests.Sources" Version="7.0.0-alpharelease0051" />
     <ProjectReference Include="..\NServiceBus.Unity\NServiceBus.Unity.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
 </Project>
