@@ -5,6 +5,7 @@
 
 namespace NServiceBus
 {
+    
     [ObsoleteExAttribute(Message="NServiceBus.Unity has been deprecated. Using another container is advised.  Pleas" +
         "e see upgrade guide for a list of supported containers.", TreatAsErrorFromVersion="9.0")]
     public class UnityBuilder : NServiceBus.Container.ContainerDefinition
