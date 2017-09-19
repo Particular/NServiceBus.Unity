@@ -1,25 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net452</TargetFramework>
+    <TargetFrameworks>net452</TargetFrameworks>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>$(SolutionDir)NServiceBus.snk</AssemblyOriginatorKeyFile>
-    <DebugType>full</DebugType>
-    <DebugSymbols>True</DebugSymbols>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NServiceBus.Unity\NServiceBus.Unity.csproj" />
     <Compile Remove="NServiceBus.ObjectBuilder.Unity.approved.cs" />
-    <PackageReference Include="ApprovalTests" Version="3.0.13" />
-    <PackageReference Include="ApprovalUtilities" Version="3.0.13" />
-    <PackageReference Include="CommonServiceLocator" Version="1.3.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="NServiceBus.ContainerTests.Sources" Version="7.0.0-*" />
     <PackageReference Include="Unity" Version="4.0.1" />
+    <PackageReference Include="Unity.Interception" Version="4.0.1" />
     <PackageReference Include="Mono.Cecil" Version="0.10.0-beta6" />
-    <PackageReference Include="NServiceBus" Version="7.0.0-alpharelease0051" />
     <PackageReference Include="NUnit" Version="3.7.1" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net452'">
     <PackageReference Include="ApiApprover" Version="6.1.0-beta2" />
     <PackageReference Include="PublicApiGenerator" Version="6.1.0-beta2" />
-    <PackageReference Include="NServiceBus.ContainerTests.Sources" Version="7.0.0-alpharelease0051" />
-    <ProjectReference Include="..\NServiceBus.Unity\NServiceBus.Unity.csproj" />
+    <PackageReference Include="ApprovalTests" Version="3.*" />
+    <PackageReference Include="ApprovalUtilities" Version="3.*" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
 </Project>

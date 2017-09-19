@@ -1,17 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net452</TargetFramework>
-    <DebugSymbols>True</DebugSymbols>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <NoWarn>PCR0001</NoWarn>
+    <TargetFrameworks>net452</TargetFrameworks>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="CommonServiceLocator" Version="1.3.0" />
-    <PackageReference Include="Unity" Version="4.0.1" />
-    <PackageReference Include="NServiceBus.AcceptanceTesting" Version="7.0.0-alpharelease0051" />
-    <PackageReference Include="NServiceBus" Version="7.0.0-alpharelease0051" />
-    <PackageReference Include="NUnit" Version="3.7.1" />
     <ProjectReference Include="..\NServiceBus.Unity\NServiceBus.Unity.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="NServiceBus" Version="7.0.0-*" />
+    <PackageReference Include="NServiceBus.AcceptanceTesting" Version="7.0.0-*" />
+    <PackageReference Include="Unity" Version="4.*" />
+    <PackageReference Include="Unity.Interception" Version="4.*" />
+    <PackageReference Include="NUnit" Version="3.7.1" />
   </ItemGroup>
 </Project>
