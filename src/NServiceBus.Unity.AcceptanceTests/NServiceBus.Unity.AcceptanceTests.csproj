@@ -15,5 +15,6 @@
     <PackageReference Include="Unity" Version="4.*" />
     <PackageReference Include="Unity.Interception" Version="4.*" />
     <PackageReference Include="NUnit" Version="3.7.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
   </ItemGroup>
 </Project>
