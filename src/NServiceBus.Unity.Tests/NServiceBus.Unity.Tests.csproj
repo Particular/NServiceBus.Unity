@@ -11,6 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\NServiceBus.Unity\NServiceBus.Unity.csproj" />
     <Compile Remove="NServiceBus.ObjectBuilder.Unity.approved.cs" />
+    <None Remove="NServiceBus.Unity.Tests.csproj.DotSettings" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NServiceBus.ContainerTests.Sources" Version="7.0.0-*" />
