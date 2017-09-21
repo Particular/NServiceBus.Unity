@@ -16,6 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NServiceBus.ContainerTests.Sources" Version="7.0.0-*" />
+    <!-- Do not use wildcards with Unity : https://github.com/unitycontainer/unity/issues/32 -->
     <PackageReference Include="Unity" Version="4.0.1" />
     <PackageReference Include="Unity.Interception" Version="4.0.1" />
     <PackageReference Include="Mono.Cecil" Version="0.10.0-beta6" />
