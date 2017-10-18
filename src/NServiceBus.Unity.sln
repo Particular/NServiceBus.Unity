@@ -1,13 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2017
-VisualStudioVersion = 15.0.26730.3
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 15.0.26430.12
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Unity", "NServiceBus.Unity\NServiceBus.Unity.csproj", "{343B2E7A-E228-4B31-ABB5-F5437B2E7A4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NServiceBus.Unity", "NServiceBus.Unity\NServiceBus.Unity.csproj", "{343B2E7A-E228-4B31-ABB5-F5437B2E7A4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Unity.AcceptanceTests", "NServiceBus.Unity.AcceptanceTests\NServiceBus.Unity.AcceptanceTests.csproj", "{FB342C36-9924-4E24-A484-CEE0C770BDBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NServiceBus.Unity.AcceptanceTests", "NServiceBus.Unity.AcceptanceTests\NServiceBus.Unity.AcceptanceTests.csproj", "{FB342C36-9924-4E24-A484-CEE0C770BDBF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Unity.Tests", "NServiceBus.Unity.Tests\NServiceBus.Unity.Tests.csproj", "{8D9A9D71-9BD7-4A3B-9714-8425E059A3B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NServiceBus.Unity.Tests", "NServiceBus.Unity.Tests\NServiceBus.Unity.Tests.csproj", "{8D9A9D71-9BD7-4A3B-9714-8425E059A3B5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B07075AE-8E19-4173-A074-17A56C28EF60}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+		..\GitVersion.yml = ..\GitVersion.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,7 +37,8 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-    GlobalSection(ExtensibilityGlobals) = postSolution
-        SolutionGuid = {E1BCDDDC-3D13-425E-A233-06CE6E945FDF}
-    EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		        SolutionGuid = {E1BCDDDC-3D13-425E-A233-06CE6E945FDF}
+		SolutionGuid = {6EB59135-C72D-4A19-9488-EDC197C0A4B6}
+	EndGlobalSection
 EndGlobal
