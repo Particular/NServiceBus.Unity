@@ -21,9 +21,19 @@ namespace NServiceBus
 
             if (settings.TryGet(out containerHolder))
             {
+                settings.AddStartupDiagnosticsSection("NServiceBus.Unity", new
+                {
+                    UsingExistingContainer = true
+                });
+
                 return new UnityObjectBuilder(containerHolder.ExistingContainer);
 
             }
+
+            settings.AddStartupDiagnosticsSection("NServiceBus.Unity", new
+            {
+                UsingExistingContainer = false
+            });
 
             return new UnityObjectBuilder();
         }
