@@ -14,6 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Unity.Abstractions" Version="[2.0.1,3.0.0)" />
     <PackageReference Include="Unity.Container" Version="[5.0.0,6.0.0)" />
     <PackageReference Include="NServiceBus" Version="[7.0.0-beta0009,8.0.0)" />
     <PackageReference Include="Fody" Version="2.*" PrivateAssets="All" />
