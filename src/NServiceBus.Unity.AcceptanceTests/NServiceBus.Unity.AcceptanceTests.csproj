@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Unity" Version="[5.0.0,6.0.0)" />
+    <PackageReference Include="Unity" Version="[5.0.1,6.0.0)" />
     <PackageReference Include="NServiceBus.AcceptanceTesting" Version="7.0.0-*" />
   </ItemGroup>
 
