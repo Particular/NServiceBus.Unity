@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net452</TargetFrameworks>
+    <TargetFrameworks>net452;netstandard2.0</TargetFrameworks>
     <AssemblyName>NServiceBus.ObjectBuilder.Unity</AssemblyName>
     <RootNamespace>NServiceBus.ObjectBuilder.Unity</RootNamespace>
     <SignAssembly>true</SignAssembly>
@@ -14,13 +14,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Unity" Version="[4.0.1,5.0.0)" />
-    <PackageReference Include="Unity.Interception" Version="[4.0.1,5.0.0)" />
+    <PackageReference Include="Unity.Abstractions" Version="[2.0.2,3.0.0)" />
+    <PackageReference Include="Unity.Container" Version="[5.0.1,6.0.0)" />
     <PackageReference Include="NServiceBus" Version="[7.0.0-beta0009,8.0.0)" />
     <PackageReference Include="Fody" Version="2.*" PrivateAssets="All" />
     <PackageReference Include="Janitor.Fody" Version="1.*" PrivateAssets="All" />
     <PackageReference Include="Particular.CodeRules" Version="*" PrivateAssets="All" />
     <PackageReference Include="Particular.Packaging" Version="0.1.0" PrivateAssets="All" />
   </ItemGroup>
-
 </Project>

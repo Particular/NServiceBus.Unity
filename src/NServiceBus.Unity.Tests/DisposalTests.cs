@@ -2,7 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.Practices.Unity;
+    using global::Unity;
+    using global::Unity.Container.Registration;
+    using global::Unity.Extension;
+    using global::Unity.Lifetime;
+    using global::Unity.Registration;
+    using global::Unity.Resolution;
     using NServiceBus.Unity;
     using NUnit.Framework;
 
@@ -95,7 +100,7 @@
             }
 
             public IUnityContainer Parent { get; }
-            public IEnumerable<ContainerRegistration> Registrations { get; }
+            public IEnumerable<IContainerRegistration> Registrations { get; }
         }
     }
 }

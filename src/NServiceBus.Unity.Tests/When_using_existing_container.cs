@@ -3,7 +3,7 @@
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-    using Microsoft.Practices.Unity;
+    using global::Unity;
     using NUnit.Framework;
 
     [TestFixture]

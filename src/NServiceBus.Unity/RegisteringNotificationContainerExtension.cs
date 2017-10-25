@@ -1,7 +1,9 @@
 namespace NServiceBus.Unity
 {
     using System;
-    using Microsoft.Practices.Unity;
+    using global::Unity.Events;
+    using global::Unity.Extension;
+    using global::Unity.Lifetime;
 
     class RegisteringNotificationContainerExtension : UnityContainerExtension
     {
