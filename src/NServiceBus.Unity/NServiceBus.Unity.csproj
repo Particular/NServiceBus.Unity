@@ -14,7 +14,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Unity.Abstractions" Version="[2.0.2,3.0.0)" />
     <PackageReference Include="Unity.Container" Version="[5.0.1,6.0.0)" />
     <PackageReference Include="NServiceBus" Version="[7.0.0-beta0010,8.0.0)" />
     <PackageReference Include="Fody" Version="2.*" PrivateAssets="All" />
@@ -22,4 +21,5 @@
     <PackageReference Include="Particular.CodeRules" Version="*" PrivateAssets="All" />
     <PackageReference Include="Particular.Packaging" Version="0.1.0" PrivateAssets="All" />
   </ItemGroup>
+
 </Project>
