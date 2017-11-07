@@ -9,8 +9,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NServiceBus.Unity\NServiceBus.Unity.csproj" />
-    <None Remove="APIApprovals.Approve.received.txt" />
-    <None Remove="NServiceBus.Unity.Tests.csproj.DotSettings" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,4 +26,10 @@
     <PackageReference Include="ApprovalTests" Version="3.0.13" />
     <PackageReference Include="PublicApiGenerator" Version="6.4.0" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="APIApprovals.Approve.received.txt" />
+    <None Remove="NServiceBus.Unity.Tests.csproj.DotSettings" />
+  </ItemGroup>
+
 </Project>
