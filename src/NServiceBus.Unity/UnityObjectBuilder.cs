@@ -3,8 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.Practices.Unity;
     using NServiceBus.ObjectBuilder.Common;
+    using global::Unity;
+    using global::Unity.Injection;
+    using global::Unity.Lifetime;
 
     class UnityObjectBuilder : IContainer
     {
@@ -140,8 +142,6 @@
 
         public void Release(object instance)
         {
-            //Not sure if I need to call this or not!
-            container.Teardown(instance);
         }
 
         bool HasDefaultInstanceOf(Type typeToBuild)
