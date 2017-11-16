@@ -3,8 +3,8 @@
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-    using Microsoft.Practices.Unity;
     using NUnit.Framework;
+    using global::Unity;
 
     [TestFixture]
     public class When_using_existing_container

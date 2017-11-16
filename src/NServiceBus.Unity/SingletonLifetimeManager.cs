@@ -1,8 +1,8 @@
 ﻿namespace NServiceBus.Unity
 {
     using System;
-    using Microsoft.Practices.ObjectBuilder2;
-    using Microsoft.Practices.Unity;
+    using global::Unity.Exceptions;
+    using global::Unity.Lifetime;
 
     [Janitor.SkipWeaving]
     class SingletonLifetimeManager : LifetimeManager, IRequiresRecovery, IDisposable
