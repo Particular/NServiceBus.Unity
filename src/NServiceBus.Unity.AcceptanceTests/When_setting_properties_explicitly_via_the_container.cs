@@ -17,10 +17,14 @@
             var context = await Scenario.Define<Context>()
                 .WithEndpoint<Endpoint>(b =>
                 {
-                    b.CustomConfig(c => c.RegisterComponents(r => r.ConfigureComponent(builder => new Endpoint.MyMessageHandler(builder.Build<Context>())
+                    b.CustomConfig(c =>
                     {
-                        MySimpleDependency = simpleValue
-                    }, DependencyLifecycle.InstancePerCall)));
+                        c.SendFailedMessagesTo("error");
+                        c.RegisterComponents(r => r.ConfigureComponent(builder => new Endpoint.MyMessageHandler(builder.Build<Context>())
+                        {
+                            MySimpleDependency = simpleValue
+                        }, DependencyLifecycle.InstancePerCall));
+                    });
                     b.When((bus, c) => bus.SendLocal(new MyMessage()));
                 })
                 .Done(c => c.WasCalled)

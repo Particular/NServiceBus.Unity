@@ -2,7 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.Practices.Unity;
+    using global::Unity;
+    using global::Unity.Extension;
+    using global::Unity.Lifetime;
+    using global::Unity.Registration;
+    using global::Unity.Resolution;
 
     class ContainerDecorator : IUnityContainer
     {
@@ -46,7 +50,6 @@
 
         public void Teardown(object o)
         {
-            decorated.Teardown(o);
         }
 
         public IUnityContainer AddExtension(UnityContainerExtension extension)
@@ -71,7 +74,7 @@
 
         public IUnityContainer Parent => decorated.Parent;
 
-        public IEnumerable<ContainerRegistration> Registrations => decorated.Registrations;
+        public IEnumerable<IContainerRegistration> Registrations => decorated.Registrations;
         private IUnityContainer decorated;
     }
 }

@@ -1,7 +1,7 @@
 namespace NServiceBus.Unity
 {
-    using Microsoft.Practices.Unity;
-    using Microsoft.Practices.Unity.ObjectBuilder;
+    using global::Unity.Builder;
+    using global::Unity.Extension;
 
     class PropertyInjectionContainerExtension : UnityContainerExtension
     {

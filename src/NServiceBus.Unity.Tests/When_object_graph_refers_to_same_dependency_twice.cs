@@ -1,6 +1,7 @@
 namespace NServiceBus.ContainerTests
 {
-    using Microsoft.Practices.Unity;
+    using global::Unity;
+    using global::Unity.Lifetime;
     using NServiceBus.Unity;
     using NUnit.Framework;
 
@@ -10,13 +11,13 @@ namespace NServiceBus.ContainerTests
         [Test]
         public void It_should_be_created_as_a_single_instance()
         {
-            var conainer = new UnityContainer();
+            var container = new UnityContainer();
 
-            conainer.RegisterType<Root, Root>();
-            conainer.RegisterType<ServiceA, ServiceA>(new PerResolveLifetimeManager());
-            conainer.RegisterType<ServiceB, ServiceB>();
+            container.RegisterType<Root, Root>();
+            container.RegisterType<ServiceA, ServiceA>(new PerResolveLifetimeManager());
+            container.RegisterType<ServiceB, ServiceB>();
 
-            using (var builder = new UnityObjectBuilder(conainer))
+            using (var builder = new UnityObjectBuilder(container))
             {
                 var root = (Root)builder.Build(typeof(Root));
 

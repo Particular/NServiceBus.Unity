@@ -1,7 +1,7 @@
 ﻿namespace ObjectBuilder.Unity.AcceptanceTests
 {
     using System.Threading.Tasks;
-    using Microsoft.Practices.Unity;
+    using global::Unity;
     using NServiceBus;
     using NServiceBus.AcceptanceTesting;
     using NServiceBus.AcceptanceTests;
@@ -34,6 +34,7 @@
             {
                 EndpointSetup<DefaultServer>((config, desc) =>
                 {
+                    config.SendFailedMessagesTo("error");
                     var container = new UnityContainer();
                     var decorator = new ContainerDecorator(container);
 

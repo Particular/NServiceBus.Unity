@@ -1,7 +1,7 @@
 namespace NServiceBus
 {
     using Container;
-    using Microsoft.Practices.Unity;
+    using global::Unity;
     using Settings;
     using Unity;
 
@@ -21,9 +21,19 @@ namespace NServiceBus
 
             if (settings.TryGet(out containerHolder))
             {
+                settings.AddStartupDiagnosticsSection("NServiceBus.Unity", new
+                {
+                    UsingExistingContainer = true
+                });
+
                 return new UnityObjectBuilder(containerHolder.ExistingContainer);
 
             }
+
+            settings.AddStartupDiagnosticsSection("NServiceBus.Unity", new
+            {
+                UsingExistingContainer = false
+            });
 
             return new UnityObjectBuilder();
         }
