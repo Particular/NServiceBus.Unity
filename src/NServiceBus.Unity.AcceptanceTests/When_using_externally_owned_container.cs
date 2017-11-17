@@ -1,12 +1,12 @@
 ﻿namespace ObjectBuilder.Unity.AcceptanceTests
 {
     using System.Threading.Tasks;
-    using Microsoft.Practices.Unity;
     using NServiceBus;
     using NServiceBus.AcceptanceTesting;
     using NServiceBus.AcceptanceTests;
     using NServiceBus.AcceptanceTests.EndpointTemplates;
     using NUnit.Framework;
+    using global::Unity;
 
     public class When_using_externally_owned_container : NServiceBusAcceptanceTest
     {

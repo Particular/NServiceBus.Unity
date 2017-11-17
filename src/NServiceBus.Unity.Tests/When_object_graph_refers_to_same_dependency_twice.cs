@@ -1,6 +1,7 @@
 namespace NServiceBus.ContainerTests
 {
-    using Microsoft.Practices.Unity;
+    using global::Unity;
+    using global::Unity.Lifetime;
     using NServiceBus.Unity;
     using NUnit.Framework;
 

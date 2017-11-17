@@ -1,7 +1,7 @@
 namespace NServiceBus
 {
     using Container;
-    using Microsoft.Practices.Unity;
+    using global::Unity;
 
     /// <summary>
     /// Extensions for unity specific config

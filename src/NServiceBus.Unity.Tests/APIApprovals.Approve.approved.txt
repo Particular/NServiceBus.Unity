@@ -11,6 +11,6 @@ namespace NServiceBus
     }
     public class static UnityConfigExtensions
     {
-        public static void UseExistingContainer(this NServiceBus.Container.ContainerCustomizations customizations, Microsoft.Practices.Unity.IUnityContainer existingContainer) { }
+        public static void UseExistingContainer(this NServiceBus.Container.ContainerCustomizations customizations, Unity.IUnityContainer existingContainer) { }
     }
 }

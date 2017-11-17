@@ -1,6 +1,7 @@
 namespace NServiceBus.Unity
 {
-    using Microsoft.Practices.ObjectBuilder2;
+    using global::Unity.Builder;
+    using global::Unity.Builder.Strategy;
 
     class PropertyInjectionBuilderStrategy : BuilderStrategy
     {
