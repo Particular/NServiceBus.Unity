@@ -8,12 +8,10 @@ namespace NServiceBus
     /// </summary>
     public static class UnityConfigExtensions
     {
-#pragma warning disable CS3001 // Argument type is not CLS-compliant
-                              /// <summary>
-                              /// Use the a pre-configured <see cref="IUnityContainer"/>.
-                              /// </summary>
+        /// <summary>
+        /// Use the a pre-configured <see cref="IUnityContainer"/>.
+        /// </summary>
         public static void UseExistingContainer(this ContainerCustomizations customizations, IUnityContainer existingContainer)
-#pragma warning restore CS3001 // Argument type is not CLS-compliant
         {
             customizations.Settings.Set<UnityBuilder.ContainerHolder>(new UnityBuilder.ContainerHolder(existingContainer));
         }
