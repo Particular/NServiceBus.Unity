@@ -16,8 +16,8 @@
     <tags>$tags$</tags>
     <dependencies>
       <dependency id="NServiceBus" version="[6.0.0, 7.0.0)" />>
-      <dependency id="Unity" version="[5.0.0, 6.0.0)" />
       <dependency id="Unity.Interception" version="[4.0.1, 5.0.0)" />
+      <dependency id="Unity" version="[5.0.1, 6.0.0)" />
     </dependencies>
   </metadata>
   <files>
