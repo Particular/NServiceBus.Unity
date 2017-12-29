@@ -12,7 +12,7 @@ namespace NServiceBus.Unity
             this.unityContainer = unityContainer;
         }
 
-        public override void PreBuildUp(IBuilderContext context)
+        public override object PreBuildUp(IBuilderContext context)
         {
             var type = context.BuildKey.Type;
             var target = context.Existing;
@@ -20,6 +20,8 @@ namespace NServiceBus.Unity
             {
                 unityContainer.SetProperties(target.GetType(), target, t => context.NewBuildUp(new NamedTypeBuildKey(t)));
             }
+
+            return null;
         }
     }
 }

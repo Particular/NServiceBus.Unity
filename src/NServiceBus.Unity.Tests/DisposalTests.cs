@@ -99,6 +99,11 @@
                 return null;
             }
 
+            public bool IsRegistered(Type type, string name)
+            {
+                throw new NotImplementedException();
+            }
+
             public IUnityContainer Parent { get; }
             public IEnumerable<IContainerRegistration> Registrations { get; }
         }
