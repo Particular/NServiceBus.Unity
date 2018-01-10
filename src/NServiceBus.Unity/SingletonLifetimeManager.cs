@@ -5,26 +5,31 @@
     using global::Unity.Lifetime;
 
     [Janitor.SkipWeaving]
+    //TODO: consider removing this implementation in favor of Unity.Lifetime.SingletonLifetimeManager
     class SingletonLifetimeManager : LifetimeManager, IRequiresRecovery, IDisposable
     {
         SingletonInstanceStore instanceStore;
+        protected override LifetimeManager OnCreateLifetimeManager()
+        {
+            return new SingletonLifetimeManager(new SingletonInstanceStore());
+        }
 
         public SingletonLifetimeManager(SingletonInstanceStore instanceStore)
         {
             this.instanceStore = instanceStore;
         }
 
-        public override object GetValue()
+        public override object GetValue(ILifetimeContainer container = null)
         {
             return instanceStore.GetValue();
         }
 
-        public override void SetValue(object newValue)
+        public override void SetValue(object newValue, ILifetimeContainer container = null)
         {
             instanceStore.SetValue(newValue);
         }
 
-        public override void RemoveValue()
+        public override void RemoveValue(ILifetimeContainer container = null)
         {
             Dispose();
         }
