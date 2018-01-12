@@ -98,6 +98,10 @@
             {
                 return null;
             }
+            public bool IsRegistered(Type type, string name)
+            {
+                return false;
+            }
 
             public IUnityContainer Parent { get; }
             public IEnumerable<IContainerRegistration> Registrations { get; }

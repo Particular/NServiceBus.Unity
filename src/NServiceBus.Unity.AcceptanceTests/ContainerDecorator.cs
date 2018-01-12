@@ -71,10 +71,16 @@
         {
             return decorated.CreateChildContainer();
         }
-
+        public bool IsRegistered(Type type, string name)
+        {
+            return decorated.IsRegistered(type, name);
+        }
         public IUnityContainer Parent => decorated.Parent;
 
         public IEnumerable<IContainerRegistration> Registrations => decorated.Registrations;
+            
         private IUnityContainer decorated;
+
+        
     }
 }
