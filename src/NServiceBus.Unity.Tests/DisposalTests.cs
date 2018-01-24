@@ -94,6 +94,11 @@
                 return null;
             }
 
+            public bool IsRegistered(Type type, string name)
+            {
+                throw new NotImplementedException();
+            }
+
             public IUnityContainer Parent { get; }
 
             private IEnumerable<IContainerRegistration> registrations = new List<ContainerRegistration>();

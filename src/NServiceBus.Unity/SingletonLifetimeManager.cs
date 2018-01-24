@@ -14,17 +14,17 @@
             this.instanceStore = instanceStore;
         }
 
-        public override object GetValue()
+        public override object GetValue(ILifetimeContainer container = null)
         {
             return instanceStore.GetValue();
         }
 
-        public override void SetValue(object newValue)
+        public override void SetValue(object newValue, ILifetimeContainer container = null)
         {
             instanceStore.SetValue(newValue);
         }
 
-        public override void RemoveValue()
+        public override void RemoveValue(ILifetimeContainer container = null)
         {
             Dispose();
         }
@@ -43,6 +43,11 @@
         protected virtual void Dispose(bool disposing)
         {
             instanceStore.Remove();
+        }
+
+        protected override LifetimeManager OnCreateLifetimeManager()
+        {
+            return new SingletonLifetimeManager(new SingletonInstanceStore());
         }
     }
 }

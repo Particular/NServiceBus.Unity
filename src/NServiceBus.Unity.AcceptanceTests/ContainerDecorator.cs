@@ -72,6 +72,11 @@
             return decorated.CreateChildContainer();
         }
 
+        public bool IsRegistered(Type type, string name)
+        {
+            throw new NotImplementedException();
+        }
+
         public IUnityContainer Parent => decorated.Parent;
 
         IEnumerable<IContainerRegistration> IUnityContainer.Registrations => decorated.Registrations;
