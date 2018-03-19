@@ -21,7 +21,7 @@ namespace NServiceBus.Unity
                 var target = context.Existing;
                 if (!type.FullName.StartsWith("Microsoft.Practices") || !type.FullName.StartsWith("Unity."))
                 {
-                    unityContainer.SetProperties(target.GetType(), target, t => context.NewBuildUp(t, "Enable property injection"));
+                    unityContainer.SetProperties(target.GetType(), target, t => context.NewBuildUp(t, null));
                 }
             }
         }
