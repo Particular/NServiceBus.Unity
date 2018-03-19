@@ -13,7 +13,7 @@ namespace NServiceBus.Unity
             this.unityContainer = unityContainer;
         }
 
-        public override object PreBuildUp(IBuilderContext context)
+        public override void PreBuildUp(IBuilderContext context)
         {
             if (mustSetProperties)
             {
@@ -21,11 +21,9 @@ namespace NServiceBus.Unity
                 var target = context.Existing;
                 if (!type.FullName.StartsWith("Microsoft.Practices") || !type.FullName.StartsWith("Unity."))
                 {
-                    unityContainer.SetProperties(target.GetType(), target, t => context.NewBuildUp(new NamedTypeBuildKey(t)));
+                    unityContainer.SetProperties(target.GetType(), target, t => context.NewBuildUp(t, "Enable property injection"));
                 }
             }
-
-            return null;
         }
 
         internal void Stop()
