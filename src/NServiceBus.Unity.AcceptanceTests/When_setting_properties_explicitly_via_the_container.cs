@@ -28,7 +28,7 @@
                     b.When((bus, c) => bus.SendLocal(new MyMessage()));
                 })
                 .Done(c => c.WasCalled)
-                .Run();
+                .Run().ConfigureAwait(false);
 
             Assert.AreEqual(simpleValue, context.PropertyValue);
         }
