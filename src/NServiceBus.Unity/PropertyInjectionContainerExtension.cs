@@ -1,7 +1,9 @@
 namespace NServiceBus.Unity
 {
+    using System.Linq;
     using global::Unity.Builder;
     using global::Unity.Extension;
+    using global::Unity.Registration;
 
     class PropertyInjectionContainerExtension : UnityContainerExtension
     {
@@ -17,6 +19,11 @@ namespace NServiceBus.Unity
         {
             strategy = new PropertyInjectionBuilderStrategy(unityObjectBuilder);
             Context.Strategies.Add(strategy, UnityBuildStage.Initialization);
+
+            foreach (var registration in Context.Lifetime.Container.Registrations.OfType<ContainerRegistration>())
+            {
+                registration.BuildChain.Add(strategy);
+            }
         }
 
         internal void Stop()
