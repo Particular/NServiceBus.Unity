@@ -16,7 +16,7 @@
             var context = await Scenario.Define<Context>()
                 .WithEndpoint<Endpoint>()
                 .Done(c => c.EndpointsStarted)
-                .Run();
+                .Run().ConfigureAwait(false);
 
             Assert.IsFalse(context.Decorator.Disposed);
             Assert.DoesNotThrow(() => context.Container.Dispose());
