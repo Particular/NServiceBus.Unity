@@ -1,6 +1,5 @@
 namespace NServiceBus.Unity
 {
-    using System;
     using global::Unity.Builder;
     using global::Unity.Extension;
 
