@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using global::Unity;
-    using global::Unity.Container.Registration;
     using global::Unity.Extension;
     using global::Unity.Lifetime;
     using global::Unity.Registration;

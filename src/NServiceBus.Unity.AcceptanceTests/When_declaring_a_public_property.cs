@@ -15,7 +15,7 @@
             var context = await Scenario.Define<Context>()
                 .WithEndpoint<Endpoint>(b => b.When((bus, c) => bus.SendLocal(new MyMessage())))
                 .Done(c => c.WasCalled)
-                .Run();
+                .Run().ConfigureAwait(false);
 
             Assert.IsTrue(context.PropertyWasInjected);
         }

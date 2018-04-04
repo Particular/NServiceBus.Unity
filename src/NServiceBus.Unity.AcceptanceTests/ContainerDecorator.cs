@@ -62,11 +62,6 @@
             return decorated.Configure(configurationInterface);
         }
 
-        public IUnityContainer RemoveAllExtensions()
-        {
-            return decorated.RemoveAllExtensions();
-        }
-
         public IUnityContainer CreateChildContainer()
         {
             return decorated.CreateChildContainer();

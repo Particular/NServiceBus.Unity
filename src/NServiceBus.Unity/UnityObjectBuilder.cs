@@ -58,6 +58,8 @@
 
         void DisposeManaged()
         {
+            container.Configure<PropertyInjectionContainerExtension>()?.Stop();
+
             if (!owned)
             {
                 return;
