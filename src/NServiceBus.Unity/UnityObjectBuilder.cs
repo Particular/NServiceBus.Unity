@@ -59,6 +59,8 @@
         {
             if (!owned)
             {
+                container.Configure<PropertyInjectionContainerExtension>()?.Stop();
+
                 return;
             }
 
@@ -235,7 +237,6 @@
                     if (configuredProperty.TryGetValue(property.Name, out value))
                     {
                         property.SetValue(target, value, null);
-
                     }
                 }
             }
