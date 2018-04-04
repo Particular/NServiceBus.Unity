@@ -38,6 +38,20 @@
         }
 
         [Test]
+        public void Existing_container_can_be_used_after_UnityObjectBuilder_is_disposed()
+        {
+            var container = new UnityContainer();
+            container.RegisterType<ISomeInterface, SomeClass>();
+
+            var builder = new UnityObjectBuilder(container);
+            builder.Dispose();
+
+            var result = container.Resolve<ISomeInterface>();
+
+            Assert.IsInstanceOf<SomeClass>(result);
+        }
+
+        [Test]
         public void Named_instances_are_not_resolvable_via_Build()
         {
             var container = new UnityContainer();
