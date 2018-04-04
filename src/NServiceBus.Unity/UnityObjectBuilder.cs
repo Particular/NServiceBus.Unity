@@ -60,7 +60,7 @@
         {
             if (!owned)
             {
-                (container.Configure<PropertyInjectionContainerExtension>() as PropertyInjectionContainerExtension)?.Stop();
+                container.Configure<PropertyInjectionContainerExtension>()?.Stop();
 
                 return;
             }
