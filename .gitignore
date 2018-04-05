@@ -37,5 +37,4 @@ logs
 run-git.cmd
 src/Chocolatey/Build/*
 
-
 .vs
