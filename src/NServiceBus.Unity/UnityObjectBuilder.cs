@@ -59,6 +59,7 @@
         {
             if (!owned)
             {
+                container.Configure<PropertyInjectionContainerExtension>()?.Remove();
                 return;
             }
 

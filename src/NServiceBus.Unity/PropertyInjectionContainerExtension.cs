@@ -6,6 +6,7 @@ namespace NServiceBus.Unity
     class PropertyInjectionContainerExtension : UnityContainerExtension
     {
         UnityObjectBuilder unityObjectBuilder;
+        PropertyInjectionBuilderStrategy propertyInjectionStrategy;
 
         public PropertyInjectionContainerExtension(UnityObjectBuilder unityObjectBuilder)
         {
@@ -14,7 +15,13 @@ namespace NServiceBus.Unity
 
         protected override void Initialize()
         {
-            Context.Strategies.Add(new PropertyInjectionBuilderStrategy(unityObjectBuilder), UnityBuildStage.Initialization);
+            propertyInjectionStrategy = new PropertyInjectionBuilderStrategy(unityObjectBuilder);
+            Context.Strategies.Add(propertyInjectionStrategy, UnityBuildStage.Initialization);
+        }
+
+        public override void Remove()
+        {
+            propertyInjectionStrategy.Stop();
         }
     }
 }

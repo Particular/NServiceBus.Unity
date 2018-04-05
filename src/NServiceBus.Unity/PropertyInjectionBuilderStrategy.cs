@@ -6,6 +6,7 @@ namespace NServiceBus.Unity
     class PropertyInjectionBuilderStrategy : BuilderStrategy
     {
         UnityObjectBuilder unityContainer;
+        bool mustInjectProperties = true;
 
         public PropertyInjectionBuilderStrategy(UnityObjectBuilder unityContainer)
         {
@@ -20,14 +21,22 @@ namespace NServiceBus.Unity
 
         public override void PreBuildUp(IBuilderContext context)
         {
-            var type = context.BuildKey.Type;
-            var target = context.Existing;
-            var container = GetUnityFromBuildContext(context);
-
-            if (!type.FullName.StartsWith("Microsoft.Practices"))
+            if (mustInjectProperties)
             {
-                unityContainer.SetProperties(target.GetType(), target, container);
+                var type = context.BuildKey.Type;
+                var target = context.Existing;
+                var container = GetUnityFromBuildContext(context);
+
+                if (!type.FullName.StartsWith("Microsoft.Practices"))
+                {
+                    unityContainer.SetProperties(target.GetType(), target, container);
+                }
             }
+        }
+
+        public void Stop()
+        {
+            mustInjectProperties = false;
         }
     }
 }

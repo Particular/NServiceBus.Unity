@@ -9,6 +9,18 @@
     public class When_using_existing_container
     {
         [Test]
+        public void Existing_registrations_can_still_be_used_after_UnityObjectBuilder_is_disposed()
+        {
+            var container = new UnityContainer();
+            container.RegisterType<ISomeInterface, SomeClass>();
+
+            using (new UnityObjectBuilder(container)) { }
+
+            var result = container.Resolve(typeof(ISomeInterface));
+            Assert.IsInstanceOf<SomeClass>(result);
+        }
+
+        [Test]
         public void Interfaces_registered_in_plain_container_are_resolvable_via_builder()
         {
             var container = new UnityContainer();
