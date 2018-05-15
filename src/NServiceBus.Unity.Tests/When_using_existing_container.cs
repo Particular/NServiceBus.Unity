@@ -15,7 +15,7 @@
             var container = new UnityContainer();
             container.RegisterType<ISomeInterface, SomeClass>();
 
-            using (var builder = new UnityObjectBuilder(container)) { }
+            using (new UnityObjectBuilder(container)) { }
 
             var result = container.Resolve(typeof(ISomeInterface));
             Assert.IsInstanceOf<SomeClass>(result);
