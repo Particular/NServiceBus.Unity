@@ -43,8 +43,7 @@
             var container = new UnityContainer();
             container.RegisterType<ISomeInterface, SomeClass>();
 
-            var builder = new UnityObjectBuilder(container);
-            builder.Dispose();
+            using (new UnityObjectBuilder(container)) { }
 
             var result = container.Resolve<ISomeInterface>();
 
