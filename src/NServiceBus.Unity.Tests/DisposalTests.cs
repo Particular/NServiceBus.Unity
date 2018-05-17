@@ -2,14 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
+    using NServiceBus.Unity;
+    using NUnit.Framework;
     using global::Unity;
-    using global::Unity.Container.Registration;
-    using global::Unity.Extension;
     using global::Unity.Lifetime;
     using global::Unity.Registration;
     using global::Unity.Resolution;
-    using NServiceBus.Unity;
-    using NUnit.Framework;
+    using global::Unity.Extension;
 
     [TestFixture]
     public class DisposalTests
