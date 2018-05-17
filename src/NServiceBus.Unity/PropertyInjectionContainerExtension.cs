@@ -1,7 +1,9 @@
 namespace NServiceBus.Unity
 {
+    using System.Collections.Generic;
     using System.Linq;
     using global::Unity.Builder;
+    using global::Unity.Builder.Strategy;
     using global::Unity.Extension;
     using global::Unity.Registration;
 
@@ -22,6 +24,11 @@ namespace NServiceBus.Unity
 
             foreach (var registration in Context.Lifetime.Container.Registrations.OfType<ContainerRegistration>())
             {
+                if (registration.BuildChain.IsReadOnly)
+                {
+                    registration.BuildChain = new List<BuilderStrategy>(registration.BuildChain);
+                }
+
                 registration.BuildChain.Add(strategy);
             }
         }
