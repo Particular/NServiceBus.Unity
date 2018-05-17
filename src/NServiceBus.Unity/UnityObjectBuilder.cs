@@ -12,6 +12,7 @@
         Dictionary<Type, Dictionary<string, object>> configuredProperties = new Dictionary<Type, Dictionary<string, object>>();
         DefaultInstances defaultInstances;
         private bool owned;
+        private bool child;
 
         public UnityObjectBuilder()
             : this(new UnityContainer(), new DefaultInstances(), true)
@@ -36,18 +37,21 @@
             }
         }
 
-        public UnityObjectBuilder(IUnityContainer container, DefaultInstances defaultInstances, bool owned)
+        public UnityObjectBuilder(IUnityContainer container, DefaultInstances defaultInstances, bool owned, bool child = false)
         {
             this.owned = owned;
+            this.child = child;
             this.container = container;
             this.defaultInstances = defaultInstances;
 
-            var propertyInjectionExtension = this.container.Configure<PropertyInjectionContainerExtension>();
-            if (propertyInjectionExtension == null)
+            if (!child)
             {
-                this.container.AddExtension(new PropertyInjectionContainerExtension(this));
+                var propertyInjectionExtension = this.container.Configure<PropertyInjectionContainerExtension>();
+                if (propertyInjectionExtension == null)
+                {
+                    this.container.AddExtension(new PropertyInjectionContainerExtension(this));
+                }
             }
-
         }
 
         public void Dispose()
@@ -57,7 +61,7 @@
 
         void DisposeManaged()
         {
-            if (!owned)
+            if (!owned && !child)
             {
                 container.Configure<PropertyInjectionContainerExtension>()?.Remove();
                 return;
