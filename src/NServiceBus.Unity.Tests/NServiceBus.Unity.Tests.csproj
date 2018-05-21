@@ -74,6 +74,7 @@
     <Compile Include="BuildTests.cs" />
     <Compile Include="DisposalTests.cs" />
     <Compile Include="SetUpFixture.cs" />
+    <Compile Include="When_object_graph_refers_to_same_dependency_twice.cs" />
     <Compile Include="When_resolving_all.cs" />
     <Compile Include="When_using_existing_container.cs" />
   </ItemGroup>
