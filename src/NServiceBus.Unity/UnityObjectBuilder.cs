@@ -12,6 +12,7 @@
         Dictionary<Type, Dictionary<string, object>> configuredProperties = new Dictionary<Type, Dictionary<string, object>>();
         DefaultInstances defaultInstances;
         private bool owned;
+        private bool child;
 
         public UnityObjectBuilder()
             : this(new UnityContainer(), new DefaultInstances(), true)
@@ -36,18 +37,21 @@
             }
         }
 
-        public UnityObjectBuilder(IUnityContainer container, DefaultInstances defaultInstances, bool owned)
+        public UnityObjectBuilder(IUnityContainer container, DefaultInstances defaultInstances, bool owned, bool child = false)
         {
             this.owned = owned;
+            this.child = child;
             this.container = container;
             this.defaultInstances = defaultInstances;
 
-            var propertyInjectionExtension = this.container.Configure<PropertyInjectionContainerExtension>();
-            if (propertyInjectionExtension == null)
+            if (!child)
             {
-                this.container.AddExtension(new PropertyInjectionContainerExtension(this));
+                var propertyInjectionExtension = this.container.Configure<PropertyInjectionContainerExtension>();
+                if (propertyInjectionExtension == null)
+                {
+                    this.container.AddExtension(new PropertyInjectionContainerExtension(this));
+                }
             }
-
         }
 
         public void Dispose()
@@ -57,7 +61,7 @@
 
         void DisposeManaged()
         {
-            if (!owned)
+            if (!owned && !child)
             {
                 container.Configure<PropertyInjectionContainerExtension>()?.Remove();
                 return;
@@ -214,7 +218,7 @@
             throw new ArgumentException("Unhandled lifecycle - " + dependencyLifecycle);
         }
 
-        public void SetProperties(Type type, object target, IUnityContainer containerForResolve)
+        public void SetProperties(Type type, object target, Func<Type, object> resolveMethod)
         {
             var properties = type.GetProperties();
             foreach (var property in properties)
@@ -226,7 +230,7 @@
 
                 if (defaultInstances.Contains(property.PropertyType))
                 {
-                    property.SetValue(target, containerForResolve.Resolve(property.PropertyType), null);
+                    property.SetValue(target, resolveMethod(property.PropertyType), null);
                 }
 
                 Dictionary<string, object> configuredProperty;
