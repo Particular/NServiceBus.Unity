@@ -35,17 +35,21 @@
             }
         }
 
-        UnityObjectBuilder(IUnityContainer container, Func<Type, bool> ancestorsHaveDefaultInstanceOf, bool owned)
+        UnityObjectBuilder(IUnityContainer container, Func<Type, bool> ancestorsHaveDefaultInstanceOf, bool owned, bool child = false)
         {
             this.owned = owned;
+            this.child = child;
             this.container = container;
             defaultInstances = new DefaultInstances();
             this.ancestorsHaveDefaultInstanceOf = ancestorsHaveDefaultInstanceOf;
 
-            var propertyInjectionExtension = this.container.Configure<PropertyInjectionContainerExtension>();
-            if (propertyInjectionExtension == null)
+            if (!child)
             {
-                this.container.AddExtension(new PropertyInjectionContainerExtension(this));
+                var propertyInjectionExtension = this.container.Configure<PropertyInjectionContainerExtension>();
+                if (propertyInjectionExtension == null)
+                {
+                    this.container.AddExtension(new PropertyInjectionContainerExtension(this));
+                }
             }
         }
 
@@ -56,7 +60,7 @@
 
         void DisposeManaged()
         {
-            if (!owned)
+            if (!owned && !child)
             {
                 container.Configure<PropertyInjectionContainerExtension>()?.Remove();
                 return;
@@ -67,7 +71,7 @@
 
         public IContainer BuildChildContainer()
         {
-            return new UnityObjectBuilder(container.CreateChildContainer(), HasDefaultInstanceOf, true);
+            return new UnityObjectBuilder(container.CreateChildContainer(), HasDefaultInstanceOf, true, true);
         }
 
         public object Build(Type typeToBuild)
@@ -228,5 +232,6 @@
         IUnityContainer container;
         DefaultInstances defaultInstances;
         private bool owned;
+        private bool child;
     }
 }
