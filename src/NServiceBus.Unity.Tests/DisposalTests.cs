@@ -5,7 +5,6 @@
     using NServiceBus.Unity;
     using NUnit.Framework;
     using global::Unity;
-    using global::Unity.Container.Registration;
     using global::Unity.Lifetime;
     using global::Unity.Registration;
     using global::Unity.Resolution;
