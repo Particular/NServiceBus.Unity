@@ -13,19 +13,17 @@ namespace NServiceBus.Unity
             this.unityContainer = unityContainer;
         }
 
-        public override object PreBuildUp(IBuilderContext context)
+        public override void PreBuildUp(IBuilderContext context)
         {
             if (mustSetProperties)
             {
                 var type = context.BuildKey.Type;
                 var target = context.Existing;
-            if (!type.FullName.StartsWith("Microsoft.Practices") || !type.FullName.StartsWith("Unity."))
+                if (!type.FullName.StartsWith("Microsoft.Practices") || !type.FullName.StartsWith("Unity."))
                 {
-                    unityContainer.SetProperties(target.GetType(), target, t => context.NewBuildUp(new NamedTypeBuildKey(t)));
+                    unityContainer.SetProperties(target.GetType(), target, t => context.NewBuildUp(t, null));
                 }
             }
-
-            return null;
         }
 
         internal void Stop()

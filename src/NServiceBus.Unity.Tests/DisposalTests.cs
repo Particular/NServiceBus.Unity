@@ -2,14 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
+    using NServiceBus.Unity;
+    using NUnit.Framework;
     using global::Unity;
-    using global::Unity.Container.Registration;
-    using global::Unity.Extension;
     using global::Unity.Lifetime;
     using global::Unity.Registration;
     using global::Unity.Resolution;
-    using NServiceBus.Unity;
-    using NUnit.Framework;
+    using global::Unity.Extension;
 
     [TestFixture]
     public class DisposalTests
@@ -39,11 +38,6 @@
         class FakeContainer : IUnityContainer
         {
             public bool Disposed { get; private set; }
-
-            public FakeContainer()
-            {
-                Registrations = new List<ContainerRegistration>();
-            }
 
             public void Dispose()
             {
@@ -98,13 +92,17 @@
             {
                 return null;
             }
+
             public bool IsRegistered(Type type, string name)
             {
-                return false;
+                throw new NotImplementedException();
             }
 
             public IUnityContainer Parent { get; }
-            public IEnumerable<IContainerRegistration> Registrations { get; }
+
+            private IEnumerable<IContainerRegistration> registrations = new List<ContainerRegistration>();
+
+            IEnumerable<IContainerRegistration> IUnityContainer.Registrations => registrations;
         }
     }
 }
