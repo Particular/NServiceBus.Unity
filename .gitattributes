@@ -64,7 +64,6 @@
 *.bat text eol=crlf
 
 # Custom for Visual Studio
-*.sln text eol=crlf merge=union
 *.suo 	-text -diff
 *.snk 	-text -diff
 *.cub 	-text -diff
