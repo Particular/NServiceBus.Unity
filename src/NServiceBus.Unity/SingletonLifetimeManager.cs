@@ -5,9 +5,14 @@
     using global::Unity.Lifetime;
 
     [Janitor.SkipWeaving]
+    //TODO: consider removing this implementation in favor of Unity.Lifetime.SingletonLifetimeManager
     class SingletonLifetimeManager : LifetimeManager, IRequiresRecovery, IDisposable
     {
         SingletonInstanceStore instanceStore;
+        protected override LifetimeManager OnCreateLifetimeManager()
+        {
+            return new SingletonLifetimeManager(new SingletonInstanceStore());
+        }
 
         public SingletonLifetimeManager(SingletonInstanceStore instanceStore)
         {
@@ -43,11 +48,6 @@
         protected virtual void Dispose(bool disposing)
         {
             instanceStore.Remove();
-        }
-
-        protected override LifetimeManager OnCreateLifetimeManager()
-        {
-            return new SingletonLifetimeManager(new SingletonInstanceStore());
         }
     }
 }

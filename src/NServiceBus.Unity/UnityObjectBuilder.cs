@@ -3,10 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using NServiceBus.ObjectBuilder.Common;
     using global::Unity;
     using global::Unity.Injection;
     using global::Unity.Lifetime;
+    using NServiceBus.ObjectBuilder.Common;
 
     class UnityObjectBuilder : IContainer
     {

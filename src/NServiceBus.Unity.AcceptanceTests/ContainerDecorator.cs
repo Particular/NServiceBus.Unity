@@ -3,10 +3,10 @@
     using System;
     using System.Collections.Generic;
     using global::Unity;
+    using global::Unity.Extension;
     using global::Unity.Lifetime;
     using global::Unity.Registration;
     using global::Unity.Resolution;
-    using global::Unity.Extension;
 
     class ContainerDecorator : IUnityContainer
     {
@@ -66,16 +66,16 @@
         {
             return decorated.CreateChildContainer();
         }
-
         public bool IsRegistered(Type type, string name)
         {
-            throw new NotImplementedException();
+            return decorated.IsRegistered(type, name);
         }
-
         public IUnityContainer Parent => decorated.Parent;
 
-        IEnumerable<IContainerRegistration> IUnityContainer.Registrations => decorated.Registrations;
-
+        public IEnumerable<IContainerRegistration> Registrations => decorated.Registrations;
+            
         private IUnityContainer decorated;
+
+        
     }
 }
