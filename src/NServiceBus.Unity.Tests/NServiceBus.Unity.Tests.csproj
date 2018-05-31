@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="Unity.Container" Version="5.8.6" />
-    <PackageReference Include="NServiceBus.ContainerTests.Sources" Version="7.0.0-rc0001" />
+    <PackageReference Include="NServiceBus.ContainerTests.Sources" Version="7.0.1" />
   </ItemGroup>
 
   <ItemGroup>

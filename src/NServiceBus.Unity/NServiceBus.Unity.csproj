@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <PackageReference Include="Unity.Container" Version="[5.8.6, 6.0.0)" />
-    <PackageReference Include="NServiceBus" Version="[7.0.0-rc0001, 8.0.0)" />
+    <PackageReference Include="NServiceBus" Version="[7.0.1, 8.0.0)" />
     <PackageReference Include="Fody" Version="2.3.23" PrivateAssets="All" />
     <PackageReference Include="Janitor.Fody" Version="1.5.5" PrivateAssets="All" />
     <PackageReference Include="Particular.CodeRules" Version="0.2.0" PrivateAssets="All" />
