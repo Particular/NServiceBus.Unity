@@ -29,10 +29,24 @@
             foreach (var registration in container.Registrations)
             {
                 var implementationType = registration.MappedToType;
-                //Register the fact that user registered a default instance himself (only if not a named registration)
-                if (!implementationType.IsAbstract && !implementationType.IsInterface && registration.Name == null)
+
+                //Named registrations cannot be supported
+                if (registration.Name != null) continue;
+
+                if (!implementationType.IsAbstract && !implementationType.IsInterface)
                 {
                     defaultInstances.Add(registration.RegisteredType);
+                }
+                else
+                {
+                    var implementation = container.Resolve(registration.RegisteredType);
+
+                    implementationType = implementation.GetType();
+
+                    if (!implementationType.IsAbstract && !implementationType.IsInterface)
+                    {
+                        defaultInstances.Add(registration.RegisteredType);
+                    }
                 }
             }
         }

@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using global::Unity;
+    using global::Unity.Injection;
     using NUnit.Framework;
 
     [TestFixture]
@@ -15,6 +16,18 @@
             var container = new UnityContainer();
             container.RegisterType<ISomeInterface, SomeClass>();
 
+            var builder = new UnityObjectBuilder(container);
+
+            var result = builder.Build(typeof(ISomeInterface));
+
+            Assert.IsInstanceOf<SomeClass>(result);
+        }
+
+        [Test]
+        public void Interfaces_registered_in_plain_container_with_injectionfactories_are_resolvable_via_builder()
+        {
+            var container = new UnityContainer();
+            container.RegisterType<ISomeInterface>(new InjectionFactory(c => new SomeClass()));
             var builder = new UnityObjectBuilder(container);
 
             var result = builder.Build(typeof(ISomeInterface));
