@@ -2,8 +2,8 @@ namespace NServiceBus.ContainerTests
 {
     using global::Unity;
     using global::Unity.Lifetime;
-    using NServiceBus.Unity;
     using NUnit.Framework;
+    using Unity;
 
     [TestFixture]
     public class When_object_graph_refers_to_same_dependency_twice
