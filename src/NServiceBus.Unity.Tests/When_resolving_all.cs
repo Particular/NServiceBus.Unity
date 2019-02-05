@@ -1,7 +1,7 @@
 namespace NServiceBus.Unity.Tests
 {
     using System.Linq;
-    using NServiceBus.ContainerTests;
+    using ContainerTests;
     using NUnit.Framework;
 
     [TestFixture]

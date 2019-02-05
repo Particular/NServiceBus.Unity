@@ -17,9 +17,7 @@ namespace NServiceBus
         /// <returns>The new container wrapper.</returns>
         public override ObjectBuilder.Common.IContainer CreateContainer(ReadOnlySettings settings)
         {
-            ContainerHolder containerHolder;
-
-            if (settings.TryGet(out containerHolder))
+            if (settings.TryGet(out ContainerHolder containerHolder))
             {
                 settings.AddStartupDiagnosticsSection("NServiceBus.Unity", new
                 {
