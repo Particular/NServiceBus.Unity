@@ -100,7 +100,7 @@
 
             public IUnityContainer Parent { get; }
 
-            private IEnumerable<IContainerRegistration> registrations = new List<ContainerRegistration>();
+            IEnumerable<IContainerRegistration> registrations = new List<ContainerRegistration>();
 
             IEnumerable<IContainerRegistration> IUnityContainer.Registrations => registrations;
         }

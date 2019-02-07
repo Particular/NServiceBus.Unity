@@ -31,7 +31,10 @@
                 var implementationType = registration.MappedToType;
 
                 //Named registrations cannot be supported
-                if (registration.Name != null) continue;
+                if (registration.Name != null)
+                {
+                    continue;
+                }
 
                 if (!implementationType.IsAbstract && !implementationType.IsInterface)
                 {
@@ -246,7 +249,7 @@
         Func<Type, bool> ancestorsHaveDefaultInstanceOf;
         IUnityContainer container;
         DefaultInstances defaultInstances;
-        private bool owned;
-        private bool child;
+        bool owned;
+        bool child;
     }
 }

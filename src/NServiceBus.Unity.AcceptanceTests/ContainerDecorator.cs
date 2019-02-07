@@ -73,9 +73,7 @@
         public IUnityContainer Parent => decorated.Parent;
 
         public IEnumerable<IContainerRegistration> Registrations => decorated.Registrations;
-            
-        private IUnityContainer decorated;
 
-        
+        IUnityContainer decorated;
     }
 }

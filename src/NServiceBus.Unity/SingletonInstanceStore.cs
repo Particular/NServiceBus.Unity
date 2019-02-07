@@ -5,7 +5,7 @@
 
     class SingletonInstanceStore
     {
-        private object lockObj = new object();
+        object lockObj = new object();
         bool needsDisposing;
         object value;
 
@@ -48,7 +48,7 @@
             }
         }
 
-        private void TryExit()
+        void TryExit()
         {
             // Prevent first chance exception when abandoning a lock that has not been entered
             if (Monitor.IsEntered(lockObj))
@@ -62,6 +62,6 @@
                     // Noop here - we don't hold the lock and that's ok.
                 }
             }
-        }        
+        }
     }
 }
