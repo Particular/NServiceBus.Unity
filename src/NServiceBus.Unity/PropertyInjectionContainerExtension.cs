@@ -8,7 +8,7 @@ namespace NServiceBus.Unity
     class PropertyInjectionContainerExtension : UnityContainerExtension
     {
         UnityObjectBuilder unityObjectBuilder;
-        //PropertyInjectionBuilderStrategy strategy;
+        PropertyInjectionBuilderStrategy strategy;
 
         public PropertyInjectionContainerExtension(UnityObjectBuilder unityObjectBuilder)
         {
@@ -17,18 +17,19 @@ namespace NServiceBus.Unity
 
         protected override void Initialize()
         {
-            //strategy = new PropertyInjectionBuilderStrategy(unityObjectBuilder);
-            //Context.Strategies.Add(strategy, UnityBuildStage.Initialization);
+            strategy = new PropertyInjectionBuilderStrategy(unityObjectBuilder);
+            Context.Strategies.Add(strategy, UnityBuildStage.Initialization);
 
-            //foreach (var registration in Context.Lifetime.Container.Registrations.OfType<ContainerRegistration>())
-            //{
-            //    registration.BuildChain = registration.BuildChain.Concat(new []{ strategy }).ToArray();
-            //}
+            var propertyInjectionBuilderStrategies = new[] { strategy };
+            foreach (var registration in Context.Lifetime.Container.Registrations.OfType<ContainerRegistration>())
+            {
+                registration.BuildChain = registration.BuildChain.Concat(propertyInjectionBuilderStrategies).ToArray();
+            }
         }
 
         internal void Stop()
         {
-            //strategy.Stop();
+            strategy.Stop();
         }
     }
 }
