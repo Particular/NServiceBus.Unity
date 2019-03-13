@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using global::Unity;
-    using global::Unity.Injection;
     using global::Unity.Lifetime;
     using ObjectBuilder.Common;
 
@@ -137,7 +136,7 @@
         public void RegisterSingleton(Type lookupType, object instance)
         {
             defaultInstances.Add(lookupType);
-            container.RegisterFactory(lookupType, unityContainer => instance, new SingletonLifetimeManager());
+            container.RegisterFactory(lookupType, unityContainer => instance, new SingletonLifetimeManager(new SingletonInstanceStore()));
         }
 
         public bool HasComponent(Type componentType)
@@ -204,8 +203,7 @@
                     {
                         instanceStore = new SingletonInstanceStore();
                     }
-                    return new SingletonLifetimeManager();
-                    //return new SingletonLifetimeManager(instanceStore);
+                    return new SingletonLifetimeManager(instanceStore);
                 case DependencyLifecycle.InstancePerUnitOfWork:
                     return new HierarchicalLifetimeManager();
             }
@@ -223,8 +221,7 @@
                     {
                         instanceStore = new SingletonInstanceStore();
                     }
-                    return new SingletonLifetimeManager();
-                //return new SingletonLifetimeManager(instanceStore);
+                    return new SingletonLifetimeManager(instanceStore);
                 case DependencyLifecycle.InstancePerUnitOfWork:
                     return new HierarchicalLifetimeManager();
             }
