@@ -105,7 +105,7 @@
                 return;
             }
             SingletonInstanceStore instanceStore = null;
-            RegisterDefaultInstances(concreteComponent, () => GetLifetimeManager(dependencyLifecycle, ref instanceStore));
+            RegisterDefaultInstances(concreteComponent, () => GetTypeLifetimeManager(dependencyLifecycle, ref instanceStore));
         }
 
         public void Configure<T>(Func<T> componentFactory, DependencyLifecycle dependencyLifecycle)
@@ -192,25 +192,17 @@
             // ReSharper restore ConditionIsAlwaysTrueOrFalse
         }
 
-        static ITypeLifetimeManager GetLifetimeManager(DependencyLifecycle dependencyLifecycle, ref SingletonInstanceStore instanceStore)
+        static ITypeLifetimeManager GetTypeLifetimeManager(DependencyLifecycle dependencyLifecycle, ref SingletonInstanceStore instanceStore)
         {
-            switch (dependencyLifecycle)
-            {
-                case DependencyLifecycle.InstancePerCall:
-                    return new TransientLifetimeManager();
-                case DependencyLifecycle.SingleInstance:
-                    if (instanceStore == null)
-                    {
-                        instanceStore = new SingletonInstanceStore();
-                    }
-                    return new SingletonLifetimeManager(instanceStore);
-                case DependencyLifecycle.InstancePerUnitOfWork:
-                    return new HierarchicalLifetimeManager();
-            }
-            throw new ArgumentException("Unhandled lifecycle - " + dependencyLifecycle);
+            return (ITypeLifetimeManager)GetLifetimeManager(dependencyLifecycle, ref instanceStore);
         }
 
         static IFactoryLifetimeManager GetFactoryLifetimeManager(DependencyLifecycle dependencyLifecycle, ref SingletonInstanceStore instanceStore)
+        {
+            return (IFactoryLifetimeManager)GetLifetimeManager(dependencyLifecycle, ref instanceStore);
+        }
+
+        static object GetLifetimeManager(DependencyLifecycle dependencyLifecycle, ref SingletonInstanceStore instanceStore)
         {
             switch (dependencyLifecycle)
             {
