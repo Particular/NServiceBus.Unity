@@ -10,17 +10,17 @@
 
     public class When_using_externally_owned_container : NServiceBusAcceptanceTest
     {
-        [Test]
-        public async Task Should_shutdown_properly()
-        {
-            var context = await Scenario.Define<Context>()
-                .WithEndpoint<Endpoint>()
-                .Done(c => c.EndpointsStarted)
-                .Run();
+        //[Test]
+        //public async Task Should_shutdown_properly()
+        //{
+        //    var context = await Scenario.Define<Context>()
+        //        .WithEndpoint<Endpoint>()
+        //        .Done(c => c.EndpointsStarted)
+        //        .Run();
 
-            Assert.IsFalse(context.Decorator.Disposed);
-            Assert.DoesNotThrow(() => context.Container.Dispose());
-        }
+        //    Assert.IsFalse(context.Decorator.Disposed);
+        //    Assert.DoesNotThrow(() => context.Container.Dispose());
+        //}
 
         class Context : ScenarioContext
         {
