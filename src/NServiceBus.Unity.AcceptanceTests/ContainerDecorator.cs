@@ -4,8 +4,8 @@
     using System.Collections.Generic;
     using global::Unity;
     using global::Unity.Extension;
+    using global::Unity.Injection;
     using global::Unity.Lifetime;
-    using global::Unity.Registration;
     using global::Unity.Resolution;
 
     class ContainerDecorator : IUnityContainer
@@ -21,16 +21,6 @@
         {
             decorated.Dispose();
             Disposed = true;
-        }
-
-        public IUnityContainer RegisterType(Type from, Type to, string name, LifetimeManager lifetimeManager, params InjectionMember[] injectionMembers)
-        {
-            return decorated.RegisterType(from, to, name, lifetimeManager, injectionMembers);
-        }
-
-        public IUnityContainer RegisterInstance(Type t, string name, object instance, LifetimeManager lifetime)
-        {
-            return decorated.RegisterInstance(t, name, instance, lifetime);
         }
 
         public object Resolve(Type t, string name, params ResolverOverride[] resolverOverrides)
@@ -66,6 +56,22 @@
         {
             return decorated.CreateChildContainer();
         }
+
+        public IUnityContainer RegisterType(Type typeFrom, Type typeTo, string name, ITypeLifetimeManager lifetimeManager, params InjectionMember[] injectionMembers)
+        {
+            return decorated.RegisterType(typeFrom, typeTo, name, lifetimeManager, injectionMembers);
+        }
+
+        public IUnityContainer RegisterInstance(Type type, string name, object instance, IInstanceLifetimeManager lifetimeManager)
+        {
+            return decorated.RegisterInstance(type, name, instance, lifetimeManager);
+        }
+
+        public IUnityContainer RegisterFactory(Type type, string name, Func<IUnityContainer, Type, string, object> factory, IFactoryLifetimeManager lifetimeManager)
+        {
+            return decorated.RegisterFactory(type, name, factory, lifetimeManager);
+        }
+
         public bool IsRegistered(Type type, string name)
         {
             return decorated.IsRegistered(type, name);
