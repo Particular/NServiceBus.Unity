@@ -1,4 +1,4 @@
-﻿namespace NServiceBus.Unity
+﻿/*namespace NServiceBus.Unity
 {
     using System;
     using global::Unity.Exceptions;
@@ -50,4 +50,4 @@
             instanceStore.Remove();
         }
     }
-}
+}*/

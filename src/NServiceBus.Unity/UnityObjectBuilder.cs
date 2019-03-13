@@ -124,12 +124,11 @@
             {
                 if (HasDefaultInstanceOf(t))
                 {
-                    container.RegisterType(t, Guid.NewGuid().ToString(), GetLifetimeManager(dependencyLifecycle, ref instanceStore),
-                        new InjectionFactory(unityContainer => componentFactory()));
+                    container.RegisterFactory(t, Guid.NewGuid().ToString(), unityContainer => componentFactory(), GetFactoryLifetimeManager(dependencyLifecycle, ref instanceStore));
                 }
                 else
                 {
-                    container.RegisterType(t, GetLifetimeManager(dependencyLifecycle, ref instanceStore), new InjectionFactory(unityContainer => componentFactory()));
+                    container.RegisterFactory(t, unityContainer => componentFactory(), GetFactoryLifetimeManager(dependencyLifecycle, ref instanceStore));
                     defaultInstances.Add(t);
                 }
             }
@@ -138,7 +137,7 @@
         public void RegisterSingleton(Type lookupType, object instance)
         {
             defaultInstances.Add(lookupType);
-            container.RegisterType(lookupType, new SingletonLifetimeManager(new SingletonInstanceStore()), new InjectionFactory(unityContainer => instance));
+            container.RegisterFactory(lookupType, unityContainer => instance, new SingletonLifetimeManager());
         }
 
         public bool HasComponent(Type componentType)
@@ -155,7 +154,7 @@
             return ancestorsHaveDefaultInstanceOf(typeToBuild) || defaultInstances.Contains(typeToBuild);
         }
 
-        void RegisterDefaultInstances(Type concreteComponent, Func<LifetimeManager> lifetimeManagerFactory)
+        void RegisterDefaultInstances(Type concreteComponent, Func<ITypeLifetimeManager> lifetimeManagerFactory)
         {
             var serviceTypes = GetAllServiceTypesFor(concreteComponent);
 
@@ -165,7 +164,7 @@
             }
         }
 
-        void RegisterDefaultInstance(Type concreteComponent, Type serviceType, Func<LifetimeManager> lifetimeManagerFactory)
+        void RegisterDefaultInstance(Type concreteComponent, Type serviceType, Func<ITypeLifetimeManager> lifetimeManagerFactory)
         {
             if (defaultInstances.Contains(serviceType))
             {
@@ -194,7 +193,7 @@
             // ReSharper restore ConditionIsAlwaysTrueOrFalse
         }
 
-        static LifetimeManager GetLifetimeManager(DependencyLifecycle dependencyLifecycle, ref SingletonInstanceStore instanceStore)
+        static ITypeLifetimeManager GetLifetimeManager(DependencyLifecycle dependencyLifecycle, ref SingletonInstanceStore instanceStore)
         {
             switch (dependencyLifecycle)
             {
@@ -205,7 +204,27 @@
                     {
                         instanceStore = new SingletonInstanceStore();
                     }
-                    return new SingletonLifetimeManager(instanceStore);
+                    return new SingletonLifetimeManager();
+                    //return new SingletonLifetimeManager(instanceStore);
+                case DependencyLifecycle.InstancePerUnitOfWork:
+                    return new HierarchicalLifetimeManager();
+            }
+            throw new ArgumentException("Unhandled lifecycle - " + dependencyLifecycle);
+        }
+
+        static IFactoryLifetimeManager GetFactoryLifetimeManager(DependencyLifecycle dependencyLifecycle, ref SingletonInstanceStore instanceStore)
+        {
+            switch (dependencyLifecycle)
+            {
+                case DependencyLifecycle.InstancePerCall:
+                    return new TransientLifetimeManager();
+                case DependencyLifecycle.SingleInstance:
+                    if (instanceStore == null)
+                    {
+                        instanceStore = new SingletonInstanceStore();
+                    }
+                    return new SingletonLifetimeManager();
+                //return new SingletonLifetimeManager(instanceStore);
                 case DependencyLifecycle.InstancePerUnitOfWork:
                     return new HierarchicalLifetimeManager();
             }
