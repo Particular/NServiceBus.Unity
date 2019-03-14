@@ -230,9 +230,15 @@
                     continue;
                 }
 
-                if (HasDefaultInstanceOf(property.PropertyType))
+                var propertyType = property.PropertyType;
+                if (HasDefaultInstanceOf(propertyType))
                 {
-                    property.SetValue(target, resolveMethod(property.PropertyType), null);
+                    if (type == propertyType)
+                    {
+                        // skip recursive properties
+                        continue;
+                    }
+                    property.SetValue(target, resolveMethod(propertyType), null);
                 }
             }
         }
