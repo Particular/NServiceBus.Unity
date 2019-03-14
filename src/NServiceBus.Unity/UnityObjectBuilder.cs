@@ -136,7 +136,7 @@
         public void RegisterSingleton(Type lookupType, object instance)
         {
             defaultInstances.Add(lookupType);
-            container.RegisterFactory(lookupType, unityContainer => instance, new SingletonLifetimeManager(new SingletonInstanceStore()));
+            container.RegisterInstance(lookupType, instance, new SingletonLifetimeManager(new SingletonInstanceStore()));
         }
 
         public bool HasComponent(Type componentType)
