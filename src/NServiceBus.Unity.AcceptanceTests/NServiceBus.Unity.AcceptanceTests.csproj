@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net452;netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>net452;netcoreapp2.1</TargetFrameworks>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
@@ -10,8 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Unity.Container" Version="5.8.6" />
-    <PackageReference Include="NServiceBus.AcceptanceTesting" Version="7.0.1" />
+    <PackageReference Include="Unity.Container" Version="5.8.13" />
+    <PackageReference Include="NServiceBus.AcceptanceTesting" Version="7.1.6" />
   </ItemGroup>
 
   <ItemGroup>
