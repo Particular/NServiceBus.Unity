@@ -24,7 +24,9 @@
             this.typesToInclude = typesToInclude;
         }
 
+#pragma warning disable 618
         public Task<EndpointConfiguration> GetConfiguration(RunDescriptor runDescriptor, EndpointCustomizationConfiguration endpointConfiguration, IConfigurationSource configSource, Action<EndpointConfiguration> configurationBuilderCustomization)
+#pragma warning restore 618
         {
             var types = GetTypesScopedByTestClass(endpointConfiguration);
 
@@ -40,6 +42,7 @@
             builder.UsePersistence<InMemoryPersistence>();
             builder.UseContainer<UnityBuilder>();
 
+            builder.SendFailedMessagesTo("error");
             builder.Recoverability().Delayed(delayedRetries => delayedRetries.NumberOfRetries(0));
             builder.Recoverability().Immediate(immediateRetries => immediateRetries.NumberOfRetries(0));
 
