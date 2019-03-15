@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Unity.Container" Version="5.9.7" />
     <PackageReference Include="NServiceBus.ContainerTests.Sources" Version="7.0.1" />
   </ItemGroup>
 
