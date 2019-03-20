@@ -1,7 +1,9 @@
 ﻿namespace ObjectBuilder.Unity.AcceptanceTests
 {
+    using System;
     using System.Threading.Tasks;
     using global::Unity;
+    using global::Unity.Extension;
     using NServiceBus;
     using NServiceBus.AcceptanceTesting;
     using NServiceBus.AcceptanceTests;
@@ -13,37 +15,38 @@
         [Test]
         public async Task Should_shutdown_properly()
         {
-            var context = await Scenario.Define<Context>()
-                .WithEndpoint<Endpoint>()
+            var container = new UnityContainer();
+            var disposableExtension = new DisposableExtension();
+
+            await Scenario.Define<ScenarioContext>()
+                .WithEndpoint<Endpoint>(e => e.CustomConfig(config => config.UseContainer<UnityBuilder>(c => c.UseExistingContainer(container))))
                 .Done(c => c.EndpointsStarted)
                 .Run();
 
-            Assert.IsFalse(context.Decorator.Disposed);
-            Assert.DoesNotThrow(() => context.Container.Dispose());
+            Assert.IsFalse(disposableExtension.Disposed);
+            Assert.DoesNotThrow(() => container.Dispose());
+
         }
 
-        class Context : ScenarioContext
+        // Extensions implementing IDisposable are disposed as part of disposing the UnityContainer
+        // so we can use this property to assert dispose calls.
+        class DisposableExtension : IUnityContainerExtensionConfigurator, IDisposable
         {
-            public IUnityContainer Container { get; set; }
-            public ContainerDecorator Decorator { get; set; }
+            public IUnityContainer Container { get; }
+
+            public bool Disposed { get; private set; }
+
+            public void Dispose()
+            {
+                Disposed = true;
+            }
         }
 
         class Endpoint : EndpointConfigurationBuilder
         {
             public Endpoint()
             {
-                EndpointSetup<DefaultServer>((config, desc) =>
-                {
-                    config.SendFailedMessagesTo("error");
-                    var container = new UnityContainer();
-                    var decorator = new ContainerDecorator(container);
-
-                    config.UseContainer<UnityBuilder>(c => c.UseExistingContainer(decorator));
-
-                    var context = (Context)desc.ScenarioContext;
-                    context.Container = container;
-                    context.Decorator = decorator;
-                });
+                EndpointSetup<DefaultServer>();
             }
         }
     }

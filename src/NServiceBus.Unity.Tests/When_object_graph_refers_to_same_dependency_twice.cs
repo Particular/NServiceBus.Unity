@@ -42,8 +42,12 @@ namespace NServiceBus.ContainerTests
 
         class ServiceB
         {
-            // ReSharper disable once UnusedAutoPropertyAccessor.Local
-            public ServiceA ServiceA { get; set; }
+            public ServiceB(ServiceA serviceA)
+            {
+                ServiceA = serviceA;
+            }
+
+            public ServiceA ServiceA { get; }
         }
     }
 }

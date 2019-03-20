@@ -1,12 +1,11 @@
 ﻿namespace NServiceBus.Unity
 {
     using System;
-    using global::Unity.Exceptions;
     using global::Unity.Lifetime;
 
     [Janitor.SkipWeaving]
     //TODO: consider removing this implementation in favor of Unity.Lifetime.SingletonLifetimeManager
-    class SingletonLifetimeManager : LifetimeManager, IRequiresRecovery, IDisposable
+    class SingletonLifetimeManager : LifetimeManager, IDisposable, IFactoryLifetimeManager, ITypeLifetimeManager
     {
         SingletonInstanceStore instanceStore;
         protected override LifetimeManager OnCreateLifetimeManager()

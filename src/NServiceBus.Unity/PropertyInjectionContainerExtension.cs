@@ -1,9 +1,7 @@
 namespace NServiceBus.Unity
 {
-    using System.Collections.Generic;
     using System.Linq;
     using global::Unity.Builder;
-    using global::Unity.Builder.Strategy;
     using global::Unity.Extension;
     using global::Unity.Registration;
 
@@ -22,14 +20,10 @@ namespace NServiceBus.Unity
             strategy = new PropertyInjectionBuilderStrategy(unityObjectBuilder);
             Context.Strategies.Add(strategy, UnityBuildStage.Initialization);
 
+            var propertyInjectionBuilderStrategies = new[] { strategy };
             foreach (var registration in Context.Lifetime.Container.Registrations.OfType<ContainerRegistration>())
             {
-                if (registration.BuildChain.IsReadOnly)
-                {
-                    registration.BuildChain = new List<BuilderStrategy>(registration.BuildChain);
-                }
-
-                registration.BuildChain.Add(strategy);
+                registration.BuildChain = registration.BuildChain.Concat(propertyInjectionBuilderStrategies).ToArray();
             }
         }
 

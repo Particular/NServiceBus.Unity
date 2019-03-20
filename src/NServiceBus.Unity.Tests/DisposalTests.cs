@@ -1,12 +1,8 @@
 ﻿namespace NServiceBus.Unity.Tests
 {
     using System;
-    using System.Collections.Generic;
     using global::Unity;
     using global::Unity.Extension;
-    using global::Unity.Lifetime;
-    using global::Unity.Registration;
-    using global::Unity.Resolution;
     using NUnit.Framework;
     using Unity;
 
@@ -16,93 +12,41 @@
         [Test]
         public void Owned_container_should_be_disposed()
         {
-            var fakeContainer = new FakeContainer();
+            var ownedContainer = new UnityContainer();
+            var disposableExtension = new DisposableExtension();
+            ownedContainer.AddExtension(disposableExtension);
 
-            var container = new UnityObjectBuilder(fakeContainer, true);
+            var container = new UnityObjectBuilder(ownedContainer, true);
             container.Dispose();
 
-            Assert.True(fakeContainer.Disposed);
+            Assert.True(disposableExtension.Disposed);
         }
 
         [Test]
         public void Externally_owned_container_should_not_be_disposed()
         {
-            var fakeContainer = new FakeContainer();
+            var externalContainer = new UnityContainer();
+            var disposableExtension = new DisposableExtension();
+            externalContainer.AddExtension(disposableExtension);
 
-            var container = new UnityObjectBuilder(fakeContainer, false);
+            var container = new UnityObjectBuilder(externalContainer, false);
             container.Dispose();
 
-            Assert.False(fakeContainer.Disposed);
+            Assert.False(disposableExtension.Disposed);
         }
 
-        class FakeContainer : IUnityContainer
+        // Extensions implementing IDisposable are disposed as part of disposing the UnityContainer
+        // so we can use this property to assert dispose calls.
+        class DisposableExtension : IUnityContainerExtensionConfigurator, IDisposable
         {
+            public IUnityContainer Container { get; }
+
             public bool Disposed { get; private set; }
 
             public void Dispose()
             {
                 Disposed = true;
             }
-
-            public IUnityContainer RegisterType(Type @from, Type to, string name, LifetimeManager lifetimeManager, params InjectionMember[] injectionMembers)
-            {
-                return null;
-            }
-
-            public IUnityContainer RegisterInstance(Type t, string name, object instance, LifetimeManager lifetime)
-            {
-                return null;
-            }
-
-            public object Resolve(Type t, string name, params ResolverOverride[] resolverOverrides)
-            {
-                return null;
-            }
-
-            public IEnumerable<object> ResolveAll(Type t, params ResolverOverride[] resolverOverrides)
-            {
-                yield break;
-            }
-
-            public object BuildUp(Type t, object existing, string name, params ResolverOverride[] resolverOverrides)
-            {
-                return null;
-            }
-
-            public void Teardown(object o)
-            {
-            }
-
-            public IUnityContainer AddExtension(UnityContainerExtension extension)
-            {
-                return null;
-            }
-
-            public object Configure(Type configurationInterface)
-            {
-                return null;
-            }
-
-            public IUnityContainer RemoveAllExtensions()
-            {
-                return null;
-            }
-
-            public IUnityContainer CreateChildContainer()
-            {
-                return null;
-            }
-
-            public bool IsRegistered(Type type, string name)
-            {
-                throw new NotImplementedException();
-            }
-
-            public IUnityContainer Parent { get; }
-
-            private IEnumerable<IContainerRegistration> registrations = new List<ContainerRegistration>();
-
-            IEnumerable<IContainerRegistration> IUnityContainer.Registrations => registrations;
         }
     }
 }
