@@ -136,7 +136,7 @@
         public void RegisterSingleton(Type lookupType, object instance)
         {
             defaultInstances.Add(lookupType);
-            container.RegisterFactory(lookupType, unityContainer => instance, new SingletonLifetimeManager(new SingletonInstanceStore()));
+            container.RegisterInstance(lookupType, instance, new SingletonLifetimeManager(new SingletonInstanceStore()));
         }
 
         public bool HasComponent(Type componentType)
@@ -230,9 +230,15 @@
                     continue;
                 }
 
-                if (HasDefaultInstanceOf(property.PropertyType))
+                var propertyType = property.PropertyType;
+                if (HasDefaultInstanceOf(propertyType))
                 {
-                    property.SetValue(target, resolveMethod(property.PropertyType), null);
+                    if (type == propertyType)
+                    {
+                        // skip recursive properties
+                        continue;
+                    }
+                    property.SetValue(target, resolveMethod(propertyType), null);
                 }
             }
         }

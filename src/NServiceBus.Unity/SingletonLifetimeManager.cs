@@ -5,7 +5,7 @@
 
     [Janitor.SkipWeaving]
     //TODO: consider removing this implementation in favor of Unity.Lifetime.SingletonLifetimeManager
-    class SingletonLifetimeManager : LifetimeManager, IDisposable, IFactoryLifetimeManager, ITypeLifetimeManager
+    class SingletonLifetimeManager : LifetimeManager, IDisposable, IFactoryLifetimeManager, ITypeLifetimeManager, IInstanceLifetimeManager
     {
         SingletonInstanceStore instanceStore;
         protected override LifetimeManager OnCreateLifetimeManager()
