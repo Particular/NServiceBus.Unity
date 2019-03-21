@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using global::Unity;
-    using global::Unity.Injection;
     using global::Unity.Lifetime;
     using ObjectBuilder.Common;
 
@@ -106,7 +105,7 @@
                 return;
             }
             SingletonInstanceStore instanceStore = null;
-            RegisterDefaultInstances(concreteComponent, () => GetLifetimeManager(dependencyLifecycle, ref instanceStore));
+            RegisterDefaultInstances(concreteComponent, () => GetTypeLifetimeManager(dependencyLifecycle, ref instanceStore));
         }
 
         public void Configure<T>(Func<T> componentFactory, DependencyLifecycle dependencyLifecycle)
@@ -124,12 +123,11 @@
             {
                 if (HasDefaultInstanceOf(t))
                 {
-                    container.RegisterType(t, Guid.NewGuid().ToString(), GetLifetimeManager(dependencyLifecycle, ref instanceStore),
-                        new InjectionFactory(unityContainer => componentFactory()));
+                    container.RegisterFactory(t, Guid.NewGuid().ToString(), unityContainer => componentFactory(), GetFactoryLifetimeManager(dependencyLifecycle, ref instanceStore));
                 }
                 else
                 {
-                    container.RegisterType(t, GetLifetimeManager(dependencyLifecycle, ref instanceStore), new InjectionFactory(unityContainer => componentFactory()));
+                    container.RegisterFactory(t, unityContainer => componentFactory(), GetFactoryLifetimeManager(dependencyLifecycle, ref instanceStore));
                     defaultInstances.Add(t);
                 }
             }
@@ -138,7 +136,7 @@
         public void RegisterSingleton(Type lookupType, object instance)
         {
             defaultInstances.Add(lookupType);
-            container.RegisterType(lookupType, new SingletonLifetimeManager(new SingletonInstanceStore()), new InjectionFactory(unityContainer => instance));
+            container.RegisterInstance(lookupType, instance, new SingletonLifetimeManager(new SingletonInstanceStore()));
         }
 
         public bool HasComponent(Type componentType)
@@ -155,7 +153,7 @@
             return ancestorsHaveDefaultInstanceOf(typeToBuild) || defaultInstances.Contains(typeToBuild);
         }
 
-        void RegisterDefaultInstances(Type concreteComponent, Func<LifetimeManager> lifetimeManagerFactory)
+        void RegisterDefaultInstances(Type concreteComponent, Func<ITypeLifetimeManager> lifetimeManagerFactory)
         {
             var serviceTypes = GetAllServiceTypesFor(concreteComponent);
 
@@ -165,7 +163,7 @@
             }
         }
 
-        void RegisterDefaultInstance(Type concreteComponent, Type serviceType, Func<LifetimeManager> lifetimeManagerFactory)
+        void RegisterDefaultInstance(Type concreteComponent, Type serviceType, Func<ITypeLifetimeManager> lifetimeManagerFactory)
         {
             if (defaultInstances.Contains(serviceType))
             {
@@ -194,7 +192,17 @@
             // ReSharper restore ConditionIsAlwaysTrueOrFalse
         }
 
-        static LifetimeManager GetLifetimeManager(DependencyLifecycle dependencyLifecycle, ref SingletonInstanceStore instanceStore)
+        static ITypeLifetimeManager GetTypeLifetimeManager(DependencyLifecycle dependencyLifecycle, ref SingletonInstanceStore instanceStore)
+        {
+            return (ITypeLifetimeManager)GetLifetimeManager(dependencyLifecycle, ref instanceStore);
+        }
+
+        static IFactoryLifetimeManager GetFactoryLifetimeManager(DependencyLifecycle dependencyLifecycle, ref SingletonInstanceStore instanceStore)
+        {
+            return (IFactoryLifetimeManager)GetLifetimeManager(dependencyLifecycle, ref instanceStore);
+        }
+
+        static object GetLifetimeManager(DependencyLifecycle dependencyLifecycle, ref SingletonInstanceStore instanceStore)
         {
             switch (dependencyLifecycle)
             {
@@ -222,9 +230,15 @@
                     continue;
                 }
 
-                if (HasDefaultInstanceOf(property.PropertyType))
+                var propertyType = property.PropertyType;
+                if (HasDefaultInstanceOf(propertyType))
                 {
-                    property.SetValue(target, resolveMethod(property.PropertyType), null);
+                    if (type == propertyType)
+                    {
+                        // skip recursive properties
+                        continue;
+                    }
+                    property.SetValue(target, resolveMethod(propertyType), null);
                 }
             }
         }
