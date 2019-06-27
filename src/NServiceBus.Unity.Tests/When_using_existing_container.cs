@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
     using global::Unity;
     using NUnit.Framework;
+    using ObjectBuilder;
 
     [TestFixture]
     public class When_using_existing_container
@@ -144,6 +145,26 @@
 
             Assert.IsNotNull(result.Dependency);
         }
+
+        [Test]
+        public void Resolving_factories_should_work()
+        {
+            var unity = new UnityContainer();
+
+            var container = new UnityObjectBuilder(unity);
+            var builderType = typeof(Endpoint).Assembly.GetTypes().FirstOrDefault(t => t.Name?.Equals("CommonObjectBuilder") == true);
+            var builder = (IConfigureComponents)Activator.CreateInstance(builderType, container);
+
+            builder.ConfigureComponent(b =>
+            {
+                return new NamedService1();
+            }, DependencyLifecycle.SingleInstance);
+
+            var result = ((IBuilder)builder).Build<NamedService1>();
+
+            Assert.NotNull(result);
+        }
+
 
         class AbstractClass
         {
