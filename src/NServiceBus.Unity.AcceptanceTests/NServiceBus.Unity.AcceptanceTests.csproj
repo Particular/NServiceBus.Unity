@@ -10,11 +10,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="NServiceBus.AcceptanceTesting" Version="7.1.6" />
+    <PackageReference Include="NServiceBus.AcceptanceTesting" Version="7.1.10" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Unity.Container" Version="5.10.1" />
+    <PackageReference Include="Unity.Container" Version="5.11.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
     <PackageReference Include="NUnit" Version="3.11.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.12.0" />
