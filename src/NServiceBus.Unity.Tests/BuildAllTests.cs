@@ -11,9 +11,7 @@ public class BuildAllTests
     {
         var builder = new UnityObjectBuilder();
 
-
         builder.Configure(typeof(First), DependencyLifecycle.InstancePerCall);
-
         builder.Configure(typeof(Second), DependencyLifecycle.InstancePerCall);
 
         var result = builder.BuildAll(typeof(ISomeInterface));

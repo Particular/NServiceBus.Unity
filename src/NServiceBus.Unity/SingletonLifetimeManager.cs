@@ -20,7 +20,7 @@
 
         public override object GetValue(ILifetimeContainer container = null)
         {
-            return instanceStore.GetValue();
+            return instanceStore.GetValue() ?? NoValue;
         }
 
         public override void SetValue(object newValue, ILifetimeContainer container = null)
