@@ -19,7 +19,9 @@
             var disposableExtension = new DisposableExtension();
 
             await Scenario.Define<ScenarioContext>()
+#pragma warning disable 0618
                 .WithEndpoint<Endpoint>(e => e.CustomConfig(config => config.UseContainer<UnityBuilder>(c => c.UseExistingContainer(container))))
+#pragma warning restore 0618
                 .Done(c => c.EndpointsStarted)
                 .Run();
 
