@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="Unity.Container" Version="5.8.13" />
-    <PackageReference Include="NServiceBus.AcceptanceTesting" Version="7.1.12" />
+    <PackageReference Include="NServiceBus.AcceptanceTesting" Version="7.2.3" />
   </ItemGroup>
 
   <ItemGroup>
