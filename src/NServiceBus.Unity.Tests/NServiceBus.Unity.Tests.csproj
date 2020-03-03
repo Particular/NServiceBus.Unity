@@ -24,4 +24,8 @@
     <PackageReference Include="PublicApiGenerator" Version="8.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="\**\NSB.ContainerTests\When_building_components.cs" />
+  </ItemGroup>
+
 </Project>
