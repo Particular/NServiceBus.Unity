@@ -1,6 +1,5 @@
 namespace NServiceBus.ContainerTests
 {
-    using System;
     using NServiceBus;
     using ObjectBuilder.Common;
     using NUnit.Framework;
