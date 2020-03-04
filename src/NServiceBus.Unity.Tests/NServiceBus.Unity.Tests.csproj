@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="NServiceBus.ContainerTests.Sources" Version="7.1.12" />
+    <PackageReference Include="NServiceBus.ContainerTests.Sources" Version="7.2.3" />
     <PackageReference Include="Unity.Container" Version="5.8.13" />
   </ItemGroup>
 
@@ -22,6 +22,10 @@
     <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
     <PackageReference Include="Particular.Approvals" Version="0.2.0" />
     <PackageReference Include="PublicApiGenerator" Version="8.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="\**\NSB.ContainerTests\When_building_components.cs" />
   </ItemGroup>
 
 </Project>
