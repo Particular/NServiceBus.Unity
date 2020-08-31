@@ -12,10 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="NServiceBus.ContainerTests.Sources" Version="7.4.1" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Unity.Container" Version="5.11.7" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
     <PackageReference Include="NUnit" Version="3.12.0" />
