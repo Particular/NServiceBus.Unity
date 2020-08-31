@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2002
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30406.217
 MinimumVisualStudioVersion = 15.0.26430.12
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NServiceBus.Unity", "NServiceBus.Unity\NServiceBus.Unity.csproj", "{343B2E7A-E228-4B31-ABB5-F5437B2E7A4C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NServiceBus.Unity.AcceptanceTests", "NServiceBus.Unity.AcceptanceTests\NServiceBus.Unity.AcceptanceTests.csproj", "{FB342C36-9924-4E24-A484-CEE0C770BDBF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NServiceBus.Unity.Tests", "NServiceBus.Unity.Tests\NServiceBus.Unity.Tests.csproj", "{8D9A9D71-9BD7-4A3B-9714-8425E059A3B5}"
 EndProject
@@ -25,10 +23,6 @@ Global
 		{343B2E7A-E228-4B31-ABB5-F5437B2E7A4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{343B2E7A-E228-4B31-ABB5-F5437B2E7A4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{343B2E7A-E228-4B31-ABB5-F5437B2E7A4C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FB342C36-9924-4E24-A484-CEE0C770BDBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FB342C36-9924-4E24-A484-CEE0C770BDBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FB342C36-9924-4E24-A484-CEE0C770BDBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FB342C36-9924-4E24-A484-CEE0C770BDBF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8D9A9D71-9BD7-4A3B-9714-8425E059A3B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8D9A9D71-9BD7-4A3B-9714-8425E059A3B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D9A9D71-9BD7-4A3B-9714-8425E059A3B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
